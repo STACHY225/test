@@ -11,7 +11,7 @@ Legenda statusu: `Planowany` | `Do ustalenia` | `Gotowe do wdrożenia`
 
 | Plik | Co zmienić | Obecnie | Docelowo | Status |
 |---|---|---|---|---|
-| `[core]/es_extended/server/paycheck.lua` | Stawki per frakcja, on duty | 125$/15 min cywile; 250$/15 min frakcje; bez on duty | Zasiłek 15$/15 min; LSPD/LSSD/FIB **105–112$/15 min**; EMS **72–78$/15 min**; DOJ **118–125$/15 min**; tylko on duty | Planowany |
+| `[core]/es_extended/server/paycheck.lua` | Stawki per frakcja, on duty | 125$/15 min cywile; 250$/15 min frakcje; bez on duty | Zasiłek 15$/15 min; LSPD/LSSD/FIB **168–175$/15 min**; EMS **115–125$/15 min**; DOJ **150–158$/15 min**; tylko on duty | Planowany |
 | `[core]/es_extended/config.lua` | `PaycheckInterval`, `StartingAccountMoney` | 15 min; bank 2500$ | bez zmian | Planowany |
 | SQL `job_grades.salary` | Grade salaries | różne w DB | zgodnie z modelem lub wyłączone | Do ustalenia |
 
@@ -21,7 +21,7 @@ Legenda statusu: `Planowany` | `Do ustalenia` | `Gotowe do wdrożenia`
 
 | Plik | Co zmienić | Obecnie | Docelowo | Status |
 |---|---|---|---|---|
-| `[rage]/rage_jobcenter/Config.lua` | Wyświetlane `salary` per job | 6000–26000$ (marketing) | Zgodne z realnymi widełkami v2 (np. side job ~500$/h, frakcje ~800–2000$/h aktywna sesja) | Planowany |
+| `[rage]/rage_jobcenter/Config.lua` | Wyświetlane `salary` per job | 6000–26000$ (marketing) | side job ~500$/h; frakcje spokojna zmiana ~650–750$/h; aktywna ~1000–2000$/h | Planowany |
 
 ---
 
@@ -101,9 +101,9 @@ Pełna lista: wszystkie wpisy w `local policeFines` → przeskalować wg tabeli 
 
 | Plik | Co zmienić | Obecnie | Docelowo | Status |
 |---|---|---|---|---|
-| `[core]/es_extended/server/paycheck.lua` | `police`, `fib` | 250$/15 min | 105–112$/15 min (420–448$/h) | Planowany |
-| `[core]/es_extended/server/paycheck.lua` | `ambulance` | 250$/15 min | 72–78$/15 min (288–312$/h) | Planowany |
-| `[core]/es_extended/server/paycheck.lua` | `doj` | 250$/15 min | 118–125$/15 min (472–500$/h) | Planowany |
+| `[core]/es_extended/server/paycheck.lua` | `police`, `fib` | 250$/15 min | 168–175$/15 min (672–700$/h) | Planowany |
+| `[core]/es_extended/server/paycheck.lua` | `ambulance` | 250$/15 min | 115–125$/15 min (460–500$/h) | Planowany |
+| `[core]/es_extended/server/paycheck.lua` | `doj` | 250$/15 min | 150–158$/15 min (600–632$/h) | Planowany |
 | `[rage]/rage_mdt/Config.lua` | `Config.Fines.fib` | `policeFines` | ten sam katalog po przeskalowaniu | Planowany |
 | `[rage]/rage_mdt/Config.lua` | `finePercentForPlayer` (fib) | 25% | 25% (bez zmian) | Planowany |
 
@@ -160,7 +160,7 @@ Pełna lista: wszystkie wpisy w `local policeFines` → przeskalować wg tabeli 
 | `[rage]/rage_heists/Heists/ATM/shared/BabiczATM_config.lua` | Karta / hack | 500–2500$ / 200–500$ | 100–350$ / 200–700$ | Planowany |
 | `[rage]/rage_heists/Heists/ShopKeeperCashRegister/shared/BabiczShopKeeperCashRegister_config.lua` | Kasetka | 2500–5000$ | 250–600$ | Planowany |
 | `[rage]/rage_heists/Heists/ShopVault/shared/BabiczShopVault_shared.lua` | Sejf | 15000–40000$ | 800–2200$ | Planowany |
-| `[rage]/rage_heists/Heists/Bank/shared/BabiczBank_shared.lua` | Fleeca | 60000–110000$ | 6000–16000$ | Planowany |
+| `[rage]/rage_heists/Heists/Bank/shared/BabiczBank_shared.lua` | Fleeca | 60000–110000$ | 4500–12000$ | Planowany |
 | `[rage]/rage_heists/Heists/BankPacific/shared/BabiczBankPacific_config.lua` | Pacific min group, loot | minGroup 1; loot w server flow | min 4 os.; 35000–90000$ | Planowany |
 
 ---
@@ -171,7 +171,7 @@ Pełna lista: wszystkie wpisy w `local policeFines` → przeskalować wg tabeli 
 |---|---|---|---|---|
 | Boosting | (nowy / heists) | — | 350–900$, solo | Planowany |
 | Tracker | `[rage]/BabiczTracker/Config.lua` | neededMoney 500$; rewards 500–5000$ | start 200–400$; nagroda 500–1400$ | Planowany |
-| Jubiler | (nowy) | — | 1200–4500$ wartości skupu, 2–5 os. | Planowany |
+| Jubiler | (nowy) | — | 2800–6500$ wartości skupu, 2–5 os. | Planowany |
 | Lombard (napad) | (nowy) | — | 600–1800$ + biżuteria, 1–3 os. | Planowany |
 | Jacht | (nowy) | — | 10000–25000$, 3–5 os. | Planowany |
 | Humane Labs | (nowy) | — | 22000–55000$, 3–5 os. | Planowany |
@@ -220,12 +220,19 @@ Pełna lista: wszystkie wpisy w `local policeFines` → przeskalować wg tabeli 
 
 ---
 
-## 19. Sklepy, bronie i narzędzia
+## 19. Sklepy, jedzenie i picie
+
+Źródło statystyk: `[rage]/rage_hud/Config.lua` → `Config.Status`, `Config.Food`.  
+Zasada: sklep **0,28–0,35$/pkt**, restauracja **0,45–0,55$/pkt**. Spadek: **~42 głód/h**, **~72 pragnienie/h**.
 
 | Plik | Co zmienić | Obecnie (przykłady) | Docelowo | Status |
 |---|---|---|---|---|
-| `[rage]/rage_market/Config.lua` | Jedzenie, narzędzia, broń, dark shop | woda 20$; lockpick 1200$; fixkit 5000$; thermite 2000$ | Tabela kosztów życia + narzędzia v2 | Planowany |
-| `[core]/ox_inventory/data/shops.lua` | Automaty, siłownia | 22–100$ | Spójne z v2 | Planowany |
+| `[rage]/rage_market/Config.lua` → `Market` | Napoje/jedzenie sklep | woda 20$; sandwich 36$; coffee 90$ | Tabela v2 § Sklep 24/7 | Planowany |
+| `[rage]/rage_market/Config.lua` → `Liquor` | Alkohol | beer 45$; whisky 300$ | Tabela v2 § Alkohol | Planowany |
+| `[core]/ox_inventory/data/shops.lua` | Automaty | woda 18$; ecola 22$ | jak sklep 24/7 | Planowany |
+| `[rage]/rage_fractions/.../BabiczBurgerShot_config.lua` | Menu Burger Shot | cheeseburger 48$; frytki 38$ | Tabela v2 § Burger Shot | Planowany |
+| `[rage]/rage_fractions/.../BabiczTequilala_config.lua` | Menu Tequi-la-la | burgir 48$; beer 46$ | Tabela v2 § Tequi-la-la | Planowany |
+| `[rage]/rage_market/Config.lua` | Narzędzia, dark shop | lockpick 1200$; fixkit 5000$ | Tabela kosztów życia v2 | Planowany |
 | `[rage]/BabiczAmmunation/Config.lua` | Bronie legalne | 80000–280000$ | 8000–300000$ (tabela v2) | Planowany |
 
 ---

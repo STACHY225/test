@@ -27,8 +27,8 @@ Wartości w tabeli mają dwa poziomy: **typowy** (przeciętna sesja) i **aktywna
 | Zasiłek / przeżycie | 60 | 60 |
 | Praca dorywcza (zasiłek + aktywność) | 450–550 | 600–750 |
 | Pracownik firmy prywatnej | 700–1000 | 1200–1500 |
-| LSPD / LSSD / EMS | 500–900 | 1400–2000 |
-| DOJ | 400–700 | 1100–1600 |
+| LSPD / LSSD / EMS | 650–900 | 1400–2000 |
+| DOJ | 580–750 | 1100–1600 |
 | Crime (po praniu, z cooldownami) | 700–1200 | 1800–2800 |
 | Właściciel aktywnej firmy | 900–1400 | 1800–2800 |
 
@@ -40,8 +40,8 @@ Side job (~500$/h) jest kotwicą ekonomii. Pozostałe ścieżki odnoszą się do
 |---|---:|---:|---:|---:|
 | Side job | 450–550 | 1.0× | 600–750 | 1.0× |
 | Firma (pracownik) | 700–1000 | 1.4–2.0× | 1200–1500 | 2.0–2.5× |
-| Frakcja (LSPD / LSSD / EMS) | 500–900 | 1.0–1.8× | 1400–2000 | 2.3–3.3× |
-| DOJ | 400–700 | 0.8–1.4× | 1100–1600 | 2.2–3.2× |
+| Frakcja (LSPD / LSSD / EMS) | 650–900 | 1.3–1.8× | 1400–2000 | 2.3–3.3× |
+| DOJ | 580–750 | 1.2–1.5× | 1100–1600 | 2.2–3.2× |
 | Crime | 700–1200 | 1.4–2.4× | 1800–2800 | 3.0–4.7× |
 
 Kotwica side job (500$/h vs 550–600$/h) — **Status decyzji**.
@@ -53,9 +53,10 @@ Kotwica side job (500$/h vs 550–600$/h) — **Status decyzji**.
 | Pierwsze auto (1.5k) | 3 h | 2 h | 1 h |
 | Sensowne auto (10k) | 20 h | 13 h | 8 h |
 | Dobre auto (75k) | 150 h | 94 h | 63 h |
-| Endgame auto (1.2 mln) | 2400 h | 1500 h | 1000 h |
+| Super auto (500k) | 1000 h | 667 h | 417 h |
+| Perełka (1.2 mln) | 2400 h | 1600 h | 1000 h |
 
-Przy 6 h/dzień i endgame auto: **~67 tygodni** (side job), **~42 tygodnie** (typ. frakcja), **~28 tygodni** (typ. crime).
+Przy 6 h/dzień, super auto 500k: **~28 tygodni** (side job), **~19 tygodni** (frakcja), **~12 tygodni** (crime).
 
 ---
 
@@ -68,9 +69,9 @@ Przy 6 h/dzień i endgame auto: **~67 tygodni** (side job), **~42 tygodnie** (ty
 | Bezrobotny (zasiłek) | 15$ | 60$ | brak aktywnej pracy / off-duty |
 | Praca dorywcza | 15$ | 60$ | on duty; reszta z aktywności jobu |
 | Firma prywatna `c_*` | 10–15$ | 40–60$ | on duty |
-| LSPD / LSSD / FIB | 105–112$ | 420–448$ | on duty |
-| EMS | 72–78$ | 288–312$ | on duty |
-| DOJ | 118–125$ | 472–500$ | on duty |
+| LSPD / LSSD / FIB | 168–175$ | 672–700$ | on duty |
+| EMS | 115–125$ | 460–500$ | on duty |
+| DOJ | 150–158$ | 600–632$ | on duty |
 
 Wypłata co 15 min, on duty. Czas AFK odejmowany od czasu służby.
 
@@ -88,15 +89,15 @@ Wypłata co 15 min, on duty. Czas AFK odejmowany od czasu służby.
 
 | Frakcja | Minutówka $/h | Interakcje | Minutówka w typ. dochodzie (~10 online) |
 |---|---:|---|---:|
-| DOJ | 472–500 | rzadkie (licencje, sprawy) | ~85–95% |
-| LSPD / LSSD / FIB | 420–448 | opcjonalne (mandaty) | ~75–90% |
-| EMS | 288–312 | częste (revive) + kursy NPC | ~50–60% |
+| LSPD / LSSD / FIB | 672–700 | opcjonalne (mandaty) | ~90–100% |
+| EMS | 460–500 | revive + kursy NPC | ~60–70% |
+| DOJ | 600–632 | rzadkie (licencje, sprawy) | ~85–95% |
 
-| Frakcja | Typowy razem $/h (~10 online) | Typowy razem $/h (~50 online) |
+| Frakcja | Spokojna zmiana (~10 online) | Aktywna sesja (~50 online) |
 |---|---:|---:|
-| DOJ | 520–580 | 620–780 |
-| LSPD / LSSD / FIB | 460–520 | 640–880 |
-| EMS | 500–580 | 900–1400 |
+| LSPD / LSSD / FIB | 650–750 | 850–1100 |
+| EMS | 650–800 | 1000–1500 |
+| DOJ | 580–700 | 750–950 |
 
 ### Scenariusze (1 h)
 
@@ -104,29 +105,30 @@ Wypłata co 15 min, on duty. Czas AFK odejmowany od czasu służby.
 
 | Online | Frakcja | Minutówka | Interakcje | Razem $/h |
 |---:|---|---:|---:|---:|
-| ~10 | LSPD, 1–2 mandaty | 440 | 25–50 | 465–490 |
-| ~10 | LSPD, 0 mandatów | 440 | 0 | 440 |
-| ~10 | EMS, 2 kursy + 1 revive | 300 | 200–280 | 500–580 |
-| ~10 | DOJ, 1 sprawa | 480 | 50–125 | 530–605 |
-| ~10 | DOJ, 0 spraw | 480 | 0 | 480 |
-| ~25 | LSPD, ~4 mandaty | 440 | ~100 | ~540 |
-| ~50 | LSPD, ~8 mandatów | 440 | 200–400 | 640–840 |
-| ~50 | EMS, aktywna sesja | 300 | 600–1100 | 900–1400 |
-| ~50 | DOJ, ~4 sprawy | 480 | 200–500 | 680–980 |
+| ~10 | LSPD, 0 mandatów | 680 | 0 | 680 |
+| ~10 | LSPD, 1–2 mandaty | 680 | 25–50 | 705–730 |
+| ~10 | EMS, 3 kursy NPC | 480 | 240–375 | 720–855 |
+| ~10 | EMS, 3 kursy + 1 revive | 480 | 320–455 | 800–935 |
+| ~10 | DOJ, 0 spraw | 620 | 0 | 620 |
+| ~10 | DOJ, 1 sprawa | 620 | 50–125 | 670–745 |
+| ~25 | LSPD, ~4 mandaty | 680 | ~100 | ~780 |
+| ~50 | LSPD, ~8 mandatów | 680 | 200–400 | 880–1080 |
+| ~50 | EMS, aktywna sesja | 480 | 600–1100 | 1080–1580 |
+| ~50 | DOJ, ~4 sprawy | 620 | 200–500 | 820–1120 |
 
 | Scenariusz | Minutówka | Interakcje | Razem $/h |
 |---|---:|---:|---:|
-| LSPD, 4 mandaty | 440 | ~100 | ~540 |
-| FIB, 2 mandaty | 440 | ~50 | ~490 |
-| EMS, 6× revive (~80$ udziału) | 300 | ~480 | ~780 |
-| EMS, 3 kursy NPC (~80$ udziału) | 300 | ~240 | ~540 |
-| DOJ, 2 sprawy × ~100$ (25%) | 480 | ~200 | ~680 |
+| LSPD, 4 mandaty | 680 | ~100 | ~780 |
+| FIB, 2 mandaty | 680 | ~50 | ~730 |
+| EMS, 6× revive (~80$ udziału) | 480 | ~480 | ~960 |
+| EMS, 3 kursy NPC (~80$ udziału) | 480 | ~240 | ~720 |
+| DOJ, 2 sprawy × ~100$ (25%) | 620 | ~200 | ~820 |
 
 ### LSPD / LSSD / FIB
 
 | Element | Wartość |
 |---|---|
-| Minutówka | 420–448$/h |
+| Minutówka | 672–700$/h |
 | Mandaty / faktury | 25% kwoty |
 | Konwoje, sprawy | okazjonalnie |
 
@@ -134,7 +136,7 @@ Wypłata co 15 min, on duty. Czas AFK odejmowany od czasu służby.
 
 | Element | Wartość |
 |---|---|
-| Minutówka | 288–312$/h |
+| Minutówka | 460–500$/h |
 | Revive / leczenie | 25% kwoty |
 | Kurs EMS → lokalny medyk | 200–500$ / kurs, 2–4/h solo |
 
@@ -142,7 +144,7 @@ Wypłata co 15 min, on duty. Czas AFK odejmowany od czasu służby.
 
 | Element | Wartość |
 |---|---|
-| Minutówka | 472–500$/h (~85–95% typ. dochodu) |
+| Minutówka | 600–632$/h (~85–95% typ. dochodu) |
 | Zarobek z akcji | licencje, ugody, wyroki — rzadkie |
 | Konto DOJ (society) | 10% od podatków |
 | Premia tygodniowa | jak pozostałe frakcje |
@@ -205,11 +207,12 @@ Właściciel dobrze prowadzonej firmy może przewyższyć frakcjonariusza — pr
 | Pierwszy sensowny | 5000–10000$ | 10–20 h |
 | Dobry | 25000–75000$ | 50–150 h |
 | Bardzo dobry | 150000–400000$ | 300–800 h |
-| Endgame auto | 600000–1200000$ | 1200–2400 h |
+| Sport / super (większość modeli) | 300000–700000$ | 600–1400 h |
+| Perełki endgame | 900000–1200000$ | 1800–2400 h |
 
 | Typ | Zakres cen |
 |---|---|
-| Auta osobowe | max **1.2 mln** |
+| Auta osobowe | większość top: **300–700k**; perełki max **1.2 mln** |
 | Motocykle | max **800k** |
 | Skutery wodne | ~**1 mln** |
 | Łodzie | **1–2.5 mln** |
@@ -282,8 +285,8 @@ NPC → Bankomat (karta) → Boosting → Bankomat (hack) → Kasetka → Tracke
 | 5 | Kasetka sklepowa | 1 | 2 | 250$ | 600$ | 50–70% dirty + gotówka | Aktywny |
 | 6 | Tracker | 1 | 2 | 500$ | 1400$ | black_money | Planowany |
 | 7 | Sejf sklepu | 1 | 3 | 800$ | 2200$ | black_money | Aktywny |
-| 8 | Jubiler | 2 | 5 | 1200$ | 4500$ | biżuteria → lombard | Planowany |
-| 9 | Bank Fleeca | 2 | 4 | 6000$ | 16000$ | black_money | Aktywny |
+| 8 | Jubiler | 2 | 5 | 2800$ | 6500$ | biżuteria → lombard | Planowany |
+| 9 | Bank Fleeca | 2 | 4 | 4500$ | 12000$ | black_money | Aktywny |
 | 10 | Napad na lombard | 1 | 3 | 600$ | 1800$ | gotówka + biżuteria | Planowany |
 | 11 | Jacht | 3 | 5 | 10000$ | 25000$ | black_money / loot | Planowany |
 | 12 | Bank Pacific | 4 | 6 | 35000$ | 90000$ | black_money / loot | Aktywny |
@@ -461,7 +464,7 @@ Config.AttackerMultipliers = {
 | Status | Planowany (`rage_heists` — mnożnik w Config, brak aktywnego heistu) |
 | Gracze | 2–5 |
 | Mnożnik | 2 os. ×1.0 · 3 os. ×1.15 · 4 os. ×1.25 · 5 os. ×1.35 |
-| Łup | Biżuteria o łącznej wartości skupu **1200–4500$** |
+| Łup | Biżuteria o łącznej wartości skupu **2800–6500$** |
 | Typ nagrody | Itemy → sprzedaż w lombardzie / dark_lombardzie |
 | Policja min. | 3 |
 | Cooldown | ~30 min |
@@ -473,9 +476,9 @@ Config.AttackerMultipliers = {
 
 | Os. | Mnożnik | Wartość łączna | Na osobę |
 |---:|---:|---:|---:|
-| 2 | ×1.0 | 1200–4500$ | 600–2250$ |
-| 3 | ×1.15 | 1380–5175$ | 460–1725$ |
-| 5 | ×1.35 | 1620–6075$ | 324–1215$ |
+| 2 | ×1.0 | 2800–6500$ | 1400–3250$ |
+| 3 | ×1.15 | 3220–7475$ | 1073–2492$ |
+| 5 | ×1.35 | 3780–8775$ | 756–1755$ |
 
 ---
 
@@ -486,7 +489,7 @@ Config.AttackerMultipliers = {
 | Status | Aktywny (`rage_heists`) |
 | Gracze | 2–4 (min. 2 w promieniu 15 m) |
 | Mnożnik | 2 os. ×1.0 · 3 os. ×1.2 · 4 os. ×1.35 |
-| Łup łączny | 6000–16000$ black_money |
+| Łup łączny | 4500–12000$ black_money |
 | Policja min. | 4 (promień ~9500 m) |
 | Cooldown | ~15 min per lokalizacja |
 | Czas akcji | ~360 s |
@@ -497,11 +500,11 @@ Config.AttackerMultipliers = {
 
 | Os. | Mnożnik | Łącznie | Na osobę |
 |---:|---:|---:|---:|
-| 2 | ×1.0 | 6000–16000$ | 3000–8000$ |
-| 3 | ×1.2 | 7200–19200$ | 2400–6400$ |
-| 4 | ×1.35 | 8100–21600$ | 2025–5400$ |
+| 2 | ×1.0 | 4500–12000$ | 2250–6000$ |
+| 3 | ×1.2 | 5400–14400$ | 1800–4800$ |
+| 4 | ×1.35 | 6075–16200$ | 1519–4050$ |
 
-*Po praniu (25% straty): ok. 2250–6000$ czystego na osobę przy 2 napastnikach.*
+*Po praniu (25% straty): ok. 1688–4500$ czystego na osobę przy 2 napastnikach.*
 
 ---
 
@@ -722,11 +725,104 @@ Docelowy zarobek: **800–1500$/h** typowo | **1500–2200$/h** aktywna sesja.
 
 ## Koszty życia i usługi
 
+### Metabolizm (`rage_hud/Config.lua`)
+
+| Parametr | Wartość |
+|---|---|
+| Tick HUD | 300 ms |
+| Spadek głód / tick | 0.0035 |
+| Spadek pragnienie / tick | 0.006 |
+| **Spadek głód / h** | **~42 pkt** |
+| **Spadek pragnienie / h** | **~72 pkt** |
+
+Przy pełnej aktywności (bez uzupełniania): głód = 0 po ~2,4 h, pragnienie po ~1,4 h.
+
+### Zasada wyceny jedzenia i picia
+
+| Tier | $ / pkt (głód lub pragnienie) | Uwagi |
+|---|---:|---|
+| Sklep 24/7 / automaty | 0,28–0,35 | podstawowe itemy |
+| Restauracja (Burger Shot, Tequi-la-la) | 0,45–0,55 | pełne posiłki |
+| Napoje premium (kawa, energetyk) | +3–6$ | bonus energy w `Config.Food` |
+| Alkohol | osobna tabela | głównie efekt `drunk`, nie żywienie |
+
+**Koszt utrzymania @ 500$/h (~6–8% dochodu):**
+
+| Potrzeba / h | Typowy loadout | Koszt / h |
+|---|---|---:|
+| ~72 pragnienie | 4× napój po ~18 pkt | 20–24$ |
+| ~42 głód | 2× przekąska po ~17–22 pkt | 12–16$ |
+| **Razem** | | **32–40$** |
+
+### Sklep 24/7 (`rage_market` → `Config.Food`)
+
+| Item | Głód | Pragnienie | Obecnie | Docelowo |
+|---|---:|---:|---:|---:|
+| water | — | 18 | 20$ | **5–6$** |
+| ecola | — | 18 | 22$ | **5–6$** |
+| sprunk | — | 19 | 22$ | **5–6$** |
+| pomarancz | 2 | 20 | — | **6–7$** |
+| sandwich | 17 | — | 36$ | **5–6$** |
+| bread | 3 | — | 7$ | **1–2$** |
+| chips | 15 | — | 37$ | **4–5$** |
+| donut | 15 | — | 34$ | **4–5$** |
+| toast | 16 | — | — | **4–5$** |
+| hotdog | 16 | — | 38$ | **5–6$** |
+| burger | 22 | — | — | **7–8$** |
+| pizza | 21 | — | — | **7–8$** |
+| fries | 19 | — | — | **6–7$** |
+| salad | 21 | 5 | — | **8–10$** |
+| coffee | — | 15 | 90$ | **10–12$** |
+| junkenergy | 5 | 12 | 120$ | **12–16$** |
+| electrolytes | — | 14 | — | **5–6$** |
+| apple | 6 | 1 | — | **2–3$** |
+| banana | 8 | — | — | **2–3$** |
+
+Automaty (`ox_inventory/data/shops.lua`): te same widełki co sklep (woda **5–6$**, ecola **5–6$**).
+
+### Burger Shot (`Config.Food` + menu firmy)
+
+| Item | Głód | Pragnienie | Obecnie | Docelowo |
+|---|---:|---:|---:|---:|
+| veegi_burger | 58 | — | 43$ | **28–32$** |
+| cheeseburger | 61 | — | 48$ | **30–34$** |
+| becon_burger | 63 | — | 56$ | **32–36$** |
+| frytki | 54 | — | 38$ | **24–28$** |
+| schakemalinowy | 34 | 30 | 46$ | **28–32$** |
+| mint_lemonade | — | 34 | 34$ | **11–13$** |
+| orange_juice | — | 32 | 32$ | **10–12$** |
+| apple_juice | — | 31 | 31$ | **10–12$** |
+| banana_smoothie | 7 | 33 | 39$ | **12–14$** |
+| tropical_juice | — | 36 | 36$ | **12–14$** |
+
+Pełny posiłek (burger + frytki + napój): **~55–75$** · zaspokaja **~2–3 h** głodu i **~1 h** pragnienia.
+
+### Tequi-la-la (alkohol + przekąski)
+
+| Item | Głód | Pragnienie | Obecnie | Docelowo |
+|---|---:|---:|---:|---:|
+| hot_cat | 31 | 34 | 43$ | **28–32$** |
+| burgir | 33 | 32 | 48$ | **30–34$** |
+| beer | — | 16 | 46$ | **8–12$** |
+| woda_po_studencie | — | 28 | 34$ | **12–16$** |
+| wino_z_kartonu | — | 27 | 36$ | **14–18$** |
+| bum / woda_alko / rozwod | — | 32–40 | 36–56$ | **18–35$** |
+| szampon | — | 30 | 56$ | **22–28$** |
+
+### Alkohol — sklep monopolowy (`rage_market` Liquor)
+
+| Item | Pragnienie | Obecnie | Docelowo |
+|---|---:|---:|---:|
+| beer | 16 | 45$ | **8–12$** |
+| vine | 13 | 180$ | **18–28$** |
+| champagne | 12 | 200$ | **25–35$** |
+| rhum / vodka | 8–9 | 120–250$ | **35–55$** |
+| whisky | 8 | 300$ | **45–65$** |
+
+### Pozostałe koszty
+
 | Pozycja | Docelowo | Obecnie |
 |---|---:|---:|
-| Woda | 5–10$ | 20$ |
-| Proste jedzenie | 8–20$ | 36$ |
-| Lepsze jedzenie / restauracja | 25–80$ | — |
 | Telefon | 500–1000$ | 1250–1500$ |
 | Radio | 300–700$ | 850$ |
 | Lockpick | 80–200$ | 1200$ |
@@ -886,7 +982,7 @@ FIB korzysta z tego samego modelu co LSPD/LSSD:
 
 | Element | Wartość |
 |---|---|
-| Paycheck | 250$/15 min → LSPD/FIB **105–112$/15 min**; EMS **72–78$/15 min**; DOJ **118–125$/15 min** |
+| Paycheck | 250$/15 min → LSPD/FIB **168–175$/15 min**; EMS **115–125$/15 min**; DOJ **150–158$/15 min** |
 | Udział z mandatów | **25%** kwoty (jak LSPD) |
 | Mnożnik frakcji | 2.5× |
 | Katalog mandatów | ten sam co LSPD (`policeFines`) |
@@ -1033,7 +1129,10 @@ Udział wystawiającego: LSPD/FIB/EMS **25%**, firmy mechaniczne **40%**.
 |---|---|
 | Zasiłek 60$/h | Ustalone |
 | Model wypłat: minutówka + interakcje + premia tygodniowa | Ustalone |
-| Minutówka: DOJ 472–500; LSPD/FIB 420–448; EMS 288–312 $/h | Ustalone |
+| Minutówka: LSPD/FIB 672–700; EMS 460–500; DOJ 600–632 $/h | Ustalone |
+| Spokojna zmiana frakcji > side job (~650–750 vs ~500) | Ustalone |
+| Endgame aut: bulk 300–700k, perełki do 1.2 mln | Ustalone |
+| Progresja napadów: Jubiler ↑, Fleeca ↓ | Ustalone |
 | Miękki limit mandatów → society | Do ustalenia |
 | Skala typowy / aktywna sesja | Ustalone |
 | DOJ: wyższa minutówka + podatki society | Ustalone |
@@ -1059,7 +1158,9 @@ Udział wystawiającego: LSPD/FIB/EMS **25%**, firmy mechaniczne **40%**.
 Dokument obejmuje **pełny zakres ekonomii serwera**: zarobki, crime, frakcje, koszty życia, nieruchomości, utrzymanie pojazdów i moduły pomocnicze. Kluczowe założenia:
 
 - Kotwica side job ~500$/h; zasiłek 60$/h.
-- Minutówka: DOJ 472–500$/h; LSPD/FIB 420–448$/h; EMS 288–312$/h.
+- Minutówka: LSPD/FIB 672–700$/h; EMS 460–500$/h; DOJ 600–632$/h.
+- Spokojna zmiana frakcji ~650–750$/h (side job ~500$/h).
+- Endgame aut: większość 300–700k; perełki do 1.2 mln.
 - 14 napadów — pełne karty w dokumencie.
 - Endgame auto max 1.2 mln; endgame dom max ~800k.
 - 7 napadów planowanych — implementacja.

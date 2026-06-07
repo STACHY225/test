@@ -32,26 +32,21 @@ Wartości w tabeli mają dwa poziomy: **typowy** (przeciętna sesja) i **aktywna
 | Crime (po praniu, z cooldownami) | 700–1200 | 1800–2800 |
 | Właściciel aktywnej firmy | 900–1400 | 1800–2800 |
 
-### Analiza luki między side job a frakcją / crime
+### Hierarchia względem side joba
 
-Wcześniejsza wersja planu operowała jedną kolumną „docelowy zarobek” (np. frakcja 1800–2500$/h), co sugerowało luki **3.6–5×** względem side joba. Realny zarobek LSPD przy spokojnej służbie to ok. **85$/h** — poniżej side joba.
+Side job (~500$/h) jest kotwicą ekonomii. Pozostałe ścieżki odnoszą się do niej przez dwa poziomy: **typowy** (przeciętna sesja) i **aktywna sesja** (górna granica).
 
-**Obecny model (dwie kolumny):**
+| Ścieżka | Typowy $/h | × side job | Aktywna sesja $/h | × side job |
+|---|---:|---:|---:|---:|
+| Side job | 450–550 | 1.0× | 600–750 | 1.0× |
+| Firma (pracownik) | 700–1000 | 1.4–2.0× | 1200–1500 | 2.0–2.5× |
+| Frakcja (LSPD / LSSD / EMS) | 500–900 | 1.0–1.8× | 1400–2000 | 2.3–3.3× |
+| DOJ | 400–700 | 0.8–1.4× | 1100–1600 | 2.2–3.2× |
+| Crime | 700–1200 | 1.4–2.4× | 1800–2800 | 3.0–4.7× |
 
-| Porównanie | Typowy | Aktywna sesja |
-|---|---:|---:|
-| Side job → frakcja | 500 → 500–900 (**1.0–1.8×**) | 600 → 1400–2000 (**2.3–3.3×**) |
-| Side job → crime | 500 → 700–1200 (**1.4–2.4×**) | 600 → 1800–2800 (**3.0–4.7×**) |
-| Side job → firma | 500 → 700–1000 (**1.4–2.0×**) | 600 → 1200–1500 (**2.0–2.5×**) |
+Przy spokojnej służbie bez interakcji z graczami (np. LSPD bez mandatów) zarobek wynosi ok. **85$/h** — poniżej side joba. Wyższe widełki frakcji i crime wymagają aktywnej gry, współpracy z innymi graczami oraz — w przypadku crime — ponoszenia ryzyka i cooldownów. Firma prywatna stanowi przejście między side jobem a frakcją.
 
-**Wnioski:**
-
-- W **typowej** grze luka side job ↔ frakcja jest **niewielka lub neutralna** (spokojny patrol LSPD ≈ side job).
-- Wyższy zarobek frakcji/crime wymaga **aktywnej gry** — to zamierzone.
-- Firma prywatna stanowi **most** między side jobem a frakcją.
-- Crime w aktywnej sesji ma najwyższy sufit, ale wiąże się z ryzykiem, cooldownami i kosztem wejścia.
-
-**Do decyzji:** kotwica side job **500$/h** vs **550–600$/h** typowo.
+Kotwica side job (500$/h vs 550–600$/h) — patrz sekcja **Status decyzji**.
 
 ### Tempo progresu (orientacyjne)
 

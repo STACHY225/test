@@ -1,123 +1,137 @@
 # RageCity — docelowa ekonomia serwera (v2)
 
-Dokument do analizy przez zespół. Po zatwierdzeniu powstanie plik `ekonomia-wdrozenie.md` z checklistą zmian per skrypt.
+Dokument planistyczny do analizy zespołowej. Opisuje **docelowy stan** ekonomii po przeskalowaniu — bez wdrożenia w kodzie.
+
+| Dokument | Przeznaczenie |
+|---|---|
+| **Ten plik** | Wizja, balans, widełki, decyzje do zatwierdzenia |
+| [`ekonomia-wdrozenie.md`](ekonomia-wdrozenie.md) | Checklista zmian per skrypt (dla devów) |
+| `docs/ekonomia-*-discord.txt` | Stan obecny (snapshoty z configów) |
 
 ---
 
 ## Założenia ogólne
 
-Ekonomia RageCity ma być wolniejsza, czytelna i oparta o progres. Praca dorywcza jest punktem odniesienia. Frakcje, firmy i crime pozwalają zarabiać szybciej dzięki aktywnej grze, ryzyku lub współpracy — ale **endgame wymaga tygodni/miesięcy**, nie kilkunastu dni grindu.
+Ekonomia RageCity ma być wolniejsza, czytelna i oparta o progres. Praca dorywcza jest punktem odniesienia. Frakcje, firmy i crime oferują wyższy potencjał zarobku kosztem odpowiedzialności, ryzyka, wymagań organizacyjnych lub zależności od innych graczy.
 
-| Obszar | Docelowy zarobek |
-|---|---:|
-| Zasiłek / przeżycie | 60$/h |
-| Praca dorywcza (zasiłek + aktywność) | ok. 500$/h |
-| Pracownik firmy prywatnej | 800–1500$/h |
-| LSPD / LSSD / EMS | 1800–2500$/h |
-| DOJ | 1500–2200$/h |
-| Crime (po praniu, z cooldownami) | 2000–3500$/h |
-| Właściciel aktywnej firmy | 1800–3500$/h+ (może wyjść ponad frakcje) |
+Endgame (pojazdy 600k–1.2 mln) wymaga **tygodni lub miesięcy** aktywnej gry — nie kilkunastu dni.
 
-**Założenie sesji referencyjnej:** 6 h/dzień, 6 dni/tydzień = **~36 h/tydzień** (typowy aktywny gracz).
+**Sesja referencyjna:** 6 h/dzień, 6 dni/tydzień ≈ **36 h/tydzień**.
 
-**Tempo progresu (orientacyjne):**
+### Skala zarobków
 
-| Cel | Przy 500$/h (side job) | Przy 2200$/h (frakcja) | Przy 2800$/h (crime) |
+Wartości w tabeli mają dwa poziomy: **typowy** (przeciętna sesja) i **aktywna sesja** (górna granica przy wysokiej aktywności). Cele górne **nie są stałą stawką godzinową**.
+
+| Obszar | Typowy $/h | Aktywna sesja $/h |
+|---|---:|---:|
+| Zasiłek / przeżycie | 60 | 60 |
+| Praca dorywcza (zasiłek + aktywność) | 450–550 | 600–750 |
+| Pracownik firmy prywatnej | 700–1000 | 1200–1500 |
+| LSPD / LSSD / EMS | 500–900 | 1400–2000 |
+| DOJ | 400–700 | 1100–1600 |
+| Crime (po praniu, z cooldownami) | 700–1200 | 1800–2800 |
+| Właściciel aktywnej firmy | 900–1400 | 1800–2800 |
+
+### Analiza luki między side job a frakcją / crime
+
+Wcześniejsza wersja planu operowała jedną kolumną „docelowy zarobek” (np. frakcja 1800–2500$/h), co sugerowało luki **3.6–5×** względem side joba. Realny zarobek LSPD przy spokojnej służbie to ok. **85$/h** — poniżej side joba.
+
+**Obecny model (dwie kolumny):**
+
+| Porównanie | Typowy | Aktywna sesja |
+|---|---:|---:|
+| Side job → frakcja | 500 → 500–900 (**1.0–1.8×**) | 600 → 1400–2000 (**2.3–3.3×**) |
+| Side job → crime | 500 → 700–1200 (**1.4–2.4×**) | 600 → 1800–2800 (**3.0–4.7×**) |
+| Side job → firma | 500 → 700–1000 (**1.4–2.0×**) | 600 → 1200–1500 (**2.0–2.5×**) |
+
+**Wnioski:**
+
+- W **typowej** grze luka side job ↔ frakcja jest **niewielka lub neutralna** (spokojny patrol LSPD ≈ side job).
+- Wyższy zarobek frakcji/crime wymaga **aktywnej gry** — to zamierzone.
+- Firma prywatna stanowi **most** między side jobem a frakcją.
+- Crime w aktywnej sesji ma najwyższy sufit, ale wiąże się z ryzykiem, cooldownami i kosztem wejścia.
+
+**Do decyzji:** kotwica side job **500$/h** vs **550–600$/h** typowo.
+
+### Tempo progresu (orientacyjne)
+
+| Cel | @ 500$/h (side job) | @ 800$/h (typ. frakcja) | @ 1200$/h (typ. crime) |
 |---|---:|---:|---:|
-| Pierwsze auto (1.5k) | 3 h | 1 h | 1 h |
-| Sensowne auto (10k) | 20 h | 5 h | 4 h |
-| Dobre auto (75k) | 150 h | 34 h | 27 h |
-| Endgame auto (1.2 mln) | **2400 h** | **545 h** | **429 h** |
+| Pierwsze auto (1.5k) | 3 h | 2 h | 1 h |
+| Sensowne auto (10k) | 20 h | 13 h | 8 h |
+| Dobre auto (75k) | 150 h | 94 h | 63 h |
+| Endgame auto (1.2 mln) | 2400 h | 1500 h | 1000 h |
 
-Przy 6 h/dzień endgame auto to ok. **72 dni** pracy dorywczej, **~15 tygodni** aktywnej frakcji lub **~12 tygodni** crime — nie 10 dni. Obecna inflacja (20k+/h) daje endgame w ~60–100 h — stąd przeskalowanie.
+Przy 6 h/dzień i endgame auto: **~67 tygodni** (side job), **~42 tygodnie** (typ. frakcja), **~28 tygodni** (typ. crime).
 
 ---
 
 ## Paycheck i zasiłek
 
-Obecnie `es_extended/server/paycheck.lua` wypłaca **125$/15 min** wszystkim i **250$/15 min** frakcjom — bez warunku on duty. To trzeba zmienić.
-
-### Jedna tabela stawek
+**Stan obecny:** `[core]/es_extended/server/paycheck.lua` wypłaca 125$/15 min cywilom i 250$/15 min frakcjom — bez warunku on duty.
 
 | Grupa | Co 15 min | $/h | Warunek |
 |---|---:|---:|---|
-| Bezrobotny (zasiłek) | 15$ | **60$** | brak pracy / off-duty |
-| Praca dorywcza | 15$ | **60$** | on duty + zarobek z aktywności |
+| Bezrobotny (zasiłek) | 15$ | 60$ | brak aktywnej pracy / off-duty |
+| Praca dorywcza | 15$ | 60$ | on duty; reszta z aktywności jobu |
 | Firma prywatna `c_*` | 10–15$ | 40–60$ | on duty |
 | LSPD / LSSD / EMS | 20–22$ | 80–88$ | on duty |
-| DOJ | 25–30$ | **100–120$** | on duty |
+| DOJ | 25–30$ | 100–120$ | on duty |
 
-**Zasady:**
-
-- Wypłata co 15 min **bezpośrednio na konto gracza**.
-- Side job: zasiłek 60$/h + aktywność (~440$/h) = ok. 500$/h łącznie.
-- Paycheck frakcji to **podłoga**, nie główne źródło — szczególnie dla LSPD/LSSD zależnych od mandatów.
-- DOJ dostaje **wyższą minutówkę**, bo nie ma kursów ani regularnych interakcji jak EMS czy LSPD.
+**Zasady:** wypłata co 15 min na konto gracza; DOJ — wyższa minutówka ze względu na brak powtarzalnych kursów i usług jak w EMS.
 
 ---
 
 ## Frakcje publiczne
 
-### Model wypłat (zatwierdzony)
-
-Trzy niezależne źródła. Gracz zarabia **na bieżąco**; premia tygodniowa to **dodatek**.
+### Model wypłat
 
 | Źródło | Kiedy | Rola |
 |---|---|---|
 | Paycheck | co 15 min, on duty | podłoga 80–120$/h |
-| Zarobek aktywny | natychmiast po akcji | 200–1200$/h w zależności od aktywności |
-| Premia tygodniowa | bossmenu, raz/tydz. | +50–150$/h średnio (przy 36 h/tydz.) |
+| Zarobek aktywny | natychmiast po akcji | 0–1200$/h zależnie od aktywności |
+| Premia tygodniowa | bossmenu, raz/tydz. | dodatek; +50–120$/h średnio przy 36 h/tydz. |
 
-Realistycznie większość frakcjonariuszy **nie osiągnie** górnej granicy 2500$/h każdej godziny — i tak ma być. Cel 1800–2500$/h to **aktywna sesja + premia rozłożona**, nie stała stawka.
+### Zarobek aktywny — widełki
 
-### Zarobek aktywny — realistyczne widełki
-
-| Poziom aktywności | Dodatkowy zarobek gracza | Kiedy |
+| Poziom | Dodatkowy $/h | Kontekst |
 |---|---:|---|
-| Spokojna służba | 0–200$/h | patrol, brak graczy, brak spraw |
-| Normalna służba | 200–600$/h | kilka mandatów, revive, drobne sprawy |
-| Wysoka aktywność | 600–1200$/h | dużo interakcji, eventy, poważne sprawy |
+| Spokojna służba | 0–200 | patrol, brak interakcji |
+| Normalna służba | 200–600 | mandaty, revive, drobne sprawy |
+| Wysoka aktywność | 600–1200 | eventy, dużo interakcji, poważne sprawy |
 
-**Przykład LSPD — spokojna godzina (zero mandatów):** paycheck ~85$/h → **~85$/h**  
-**Przykład LSPD — normalna godzina (4 mandaty × ~120$, 25%):** ~85 + ~120 = **~205$/h**  
-**Przykład EMS — aktywna godzina (6 revive × ~80$ udziału):** ~85 + ~480 = **~565$/h**  
-**Przykład DOJ — spokojna godzina:** paycheck ~110$/h → **~110$/h** (minutówka nadrabia brak kursów)  
-**Przykład DOJ — normalna godzina (2 sprawy × ~400$, 25%):** ~110 + ~200 = **~310$/h**
+**Przykłady (1 h):**
+
+| Scenariusz | Paycheck | Aktywność | Razem |
+|---|---:|---:|---:|
+| LSPD, zero mandatów | ~85$ | 0$ | ~85$/h |
+| LSPD, 4 mandaty × ~120$ (25%) | ~85$ | ~120$ | ~205$/h |
+| EMS, 6× revive (~80$ udziału) | ~85$ | ~480$ | ~565$/h |
+| DOJ, spokojna służba | ~110$ | 0$ | ~110$/h |
+| DOJ, 2 sprawy × ~400$ (25%) | ~110$ | ~200$ | ~310$/h |
 
 ### LSPD / LSSD
 
-| Źródło | Opis |
-|---|---|
-| Paycheck | 80–88$/h |
-| Mandaty / faktury | 25% kwoty — główne źródło aktywne |
-| Konwoje, sprawy | okazjonalne bonusy |
+Paycheck + mandaty/faktury (25% kwoty) + okazjonalne konwoje i sprawy.
 
 ### EMS
 
-| Źródło | Opis |
-|---|---|
-| Paycheck | 80–88$/h |
-| Revive / leczenie | 25% kwoty usługi |
-| Kursy do lokalnych medyków | stałe, powtarzalne źródło — główny dochód EMS |
+Paycheck + revive/leczenie (25%) + **kursy do lokalnych medyków** (główne, powtarzalne źródło).
 
-### DOJ — model osobny
-
-DOJ **nie ma kursów** ani stałego strumienia interakcji. Dlatego:
+### DOJ
 
 | Element | Założenie |
 |---|---|
-| Paycheck gracza | **100–120$/h** — wyższy niż LSPD/EMS |
-| Zarobek aktywny | wyroki, ugody, licencje — nieregularny, 100–600$/h gdy są sprawy |
-| Konto DOJ (society) | **10% od podatków** — wpływy z mandatów, sprzedaży firm, salonu pojazdów, usług EMS itd. |
+| Paycheck gracza | 100–120$/h — wyższy niż LSPD/EMS |
+| Zarobek aktywny | wyroki, ugody, licencje — nieregularny |
+| Konto DOJ (society) | 10% od podatków (mandaty, sprzedaż firm, salon pojazdów, usługi EMS itd.) |
 | Premia tygodniowa | jak pozostałe frakcje |
 
-Konto DOJ nie trafia bezpośrednio do kieszeni gracza — finansuje frakcję, premie, eventy. Pracownik DOJ żyje głównie z **wyższej minutówki + sporadycznych spraw + premii**.
+Środki society DOJ finansują frakcję i premie — nie trafiają bezpośrednio do gracza.
 
-### Docelowe kwoty mandatów (obniżone)
+### Mandaty (docelowe kwoty)
 
-Poprzednie widełki były za wysokie — przy 25% udziale gracza dawały zawyżony zarobek. Nowe:
-
-| Kategoria | Kwota mandatu | Udział LSPD/LSSD (25%) |
+| Kategoria | Kwota | Udział LSPD/LSSD (25%) |
 |---|---:|---:|
 | Drobne wykroczenie | 30–80$ | 8–20$ |
 | Standardowe wykroczenie | 80–200$ | 20–50$ |
@@ -125,13 +139,13 @@ Poprzednie widełki były za wysokie — przy 25% udziale gracza dawały zawyżo
 | Przestępstwo | 500–1200$ | 125–300$ |
 | Ciężkie przestępstwo | 1200–3000$ | 300–750$ |
 
-Przy 4 mandatach/h × 120$ × 25% = **~120$/h** z mandatów — realistyczne uzupełnienie paychecka.
+Szczegółowa tabela per wykroczenie (MDT) — w pliku wdrożeniowym.
 
-### Docelowe usługi EMS / DOJ
+### Usługi EMS / DOJ
 
-| Usługa | Cena dla klienta | Udział pracownika (~25%) |
+| Usługa | Cena klienta | Udział pracownika (~25%) |
 |---|---:|---:|
-| Revive podstawowy | 200–500$ | 50–125$ |
+| Revive | 200–500$ | 50–125$ |
 | Leczenie / transport | 150–400$ | 37–100$ |
 | Kurs EMS → lokalny medyk | 200–500$ | 50–125$ |
 | Licencja / dokument DOJ | 150–500$ | 37–125$ |
@@ -140,34 +154,34 @@ Przy 4 mandatach/h × 120$ × 25% = **~120$/h** z mandatów — realistyczne uzu
 
 ### Premie tygodniowe (bossmenu)
 
-Założenie: **~36 h/tydzień** (6 h × 6 dni). Premia to dodatek — przy 36 h premia 3600$ = **+100$/h** średnio.
+Założenie: ~36 h/tydzień. Premia jako **dodatek** do paychecka i zarobku aktywnego.
 
-| Godziny w tygodniu | Premia | Średnio $/h (przy 36 h) |
+| Godziny/tydz. | Premia | ≈ $/h (przy 36 h) |
 |---:|---:|---:|
-| 5–15 h (obecność) | 500–1500$ | 14–42$/h |
-| 20–30 h | 1500–2500$ | 50–83$/h |
-| 30–40 h (typowy grind) | 2500–4000$ | 69–111$/h |
-| 40–50 h | 4000–6000$ | 80–120$/h |
-| Lider / odpowiedzialność | 6000–10000$ | 120–200$/h |
-| **Limit** | **max 10000$/os./tydz.** | — |
+| 5–15 | 500–1500$ | 14–42$ |
+| 20–30 | 1500–2500$ | 50–69$ |
+| 30–40 | 2500–4000$ | 69–111$ |
+| 40–50 | 4000–6000$ | 80–120$ |
+| Lider / odpowiedzialność | 6000–10000$ | 120–200$ |
+| **Limit** | **max 10 000$/os./tydz.** | — |
 
 ---
 
 ## Firmy prywatne
 
-| Rola | Docelowy zarobek |
-|---|---:|
-| Pracownik | 800–1500$/h |
-| Manager | 1200–2000$/h |
-| Właściciel aktywnej firmy | 1800–3500$/h+ |
+| Rola | Typowy $/h | Aktywna sesja $/h |
+|---|---:|---:|
+| Pracownik | 700–1000 | 1200–1500 |
+| Manager | 900–1300 | 1500–2000 |
+| Właściciel | 900–1400 | 1800–2800 |
 
-Właściciel dobrze prowadzonej firmy **może zarabiać więcej niż frakcjonariusz** — kosztem kosztów operacyjnych, personelem i aktywną sprzedażą. DOJ dostaje 10% od obrotu firmy na konto society.
+Właściciel dobrze prowadzonej firmy może przewyższyć frakcjonariusza — przy kosztach operacyjnych, personele i aktywnej sprzedaży. DOJ otrzymuje 10% od obrotu firmy.
 
 ---
 
 ## Skala cen pojazdów
 
-| Poziom | Cena | Czas @ 500$/h |
+| Poziom | Cena | @ 500$/h |
 |---|---:|---:|
 | Najtańszy pojazd | 1000–1500$ | 2–3 h |
 | Pierwszy sensowny | 5000–10000$ | 10–20 h |
@@ -175,7 +189,14 @@ Właściciel dobrze prowadzonej firmy **może zarabiać więcej niż frakcjonari
 | Bardzo dobry | 150000–400000$ | 300–800 h |
 | Endgame auto | 600000–1200000$ | 1200–2400 h |
 
-**Auta** max **1.2 mln** | **Motory** max **800k** | **Skutery wodne** ~**1 mln** | **Łodzie** **1–2.5 mln** | **Helikoptery** **2–4 mln** | **Samoloty** **6–8 mln**
+| Typ | Zakres cen |
+|---|---|
+| Auta osobowe | max **1.2 mln** |
+| Motocykle | max **800k** |
+| Skutery wodne | ~**1 mln** |
+| Łodzie | **1–2.5 mln** |
+| Helikoptery | **2–4 mln** (Zakup firmowy/grupowy) |
+| Samoloty | **6–8 mln** |
 
 ```lua
 types = {
@@ -195,7 +216,7 @@ types = {
 
 ## Prace dorywcze
 
-| Praca | Aktywność $/h | + zasiłek 60$/h | Razem |
+| Praca | Aktywność | + zasiłek 60$ | Razem |
 |---|---:|---:|---:|
 | Beach vendor | 290–440$ | 60$ | 350–500$ |
 | Tailor | 390–490$ | 60$ | 450–550$ |
@@ -206,65 +227,56 @@ types = {
 | Powerwashing (KQ) | 440–690$ | 60$ | 500–750$ |
 | Trucker | 540–790$ | 60$ | 600–850$ |
 
-**Priorytet wdrożenia:** KQ Deliveries i Powerwashing — obecnie **20k–30k+/h**, wymagają ~40× obniżki.
+**Uwaga wdrożeniowa:** KQ Deliveries i Powerwashing — obecnie ~20k–30k+/h; wymagają ~40× obniżki, inaczej kotwica 500$/h nie będzie respektowana.
 
 ---
 
-## Crime — założenia
+## Crime
 
-Docelowy zarobek: **2000–3500$/h** po praniu, z cooldownami. Crime to **mix** aktywności, nie jeden napad co godzinę.
+Typowy: **700–1200$/h** | Aktywna sesja: **1800–2800$/h** (po praniu, z cooldownami).
+
+Crime opiera się na **miksie aktywności** (NPC, ATM, kasetki, boosting, narkotyki), nie na powtarzaniu jednego napadu.
 
 | Element | Założenie |
 |---|---|
-| Koszt wejścia | narzędzia tanie na start, droższe na wyższe napady |
+| Koszt wejścia | narzędzia dostępne po kilku h side joba |
 | Ryzyko | policja, więzienie, utrata itemów |
 | Cooldowny | ograniczenie farmienia |
 | Biżuteria | sprzedaż w lombardzie / dark_lombardzie |
-| Brudna gotówka | realny zysk po praniu (20–45% straty) |
+| Brudna gotówka | zysk po praniu (strata 20–45%) |
 
 ---
 
-## Napady — progresja i pełna rozpiska
+## Napady — progresja
 
 ### Kolejność (od najłatwiejszego)
 
-1. Napad na NPC  
-2. Bankomat — karta  
-3. Boosting  
-4. Bankomat — hack  
-5. Kasetka sklepowa  
-6. Tracker  
-7. Sejf sklepu  
-8. Jubiler  
-9. Bank Fleeca  
-10. Napad na lombard  
-11. Napad na jacht  
-12. Bank Pacific  
-13. Humane Labs  
-14. Cayo Perico (endgame)
+NPC → Bankomat (karta) → Boosting → Bankomat (hack) → Kasetka → Tracker → Sejf sklepu → Jubiler → Fleeca → Lombard → Jacht → Pacific → Humane Labs → Cayo Perico
 
 ### Tabela zbiorcza
 
-| # | Napad | Min os. | Max os. | Łup min | Łup max | Typ nagrody | Status w kodzie |
+| # | Napad | Min os. | Max os. | Łup min | Łup max | Typ | Status |
 |---:|---|---:|---:|---:|---:|---|---|
-| 1 | NPC | 1 | 1 | 25$ | 150$ | gotówka + biżuteria (niska) | ✅ aktywny |
-| 2 | Bankomat — karta | 1 | 1 | 100$ | 350$ | gotówka | ✅ aktywny |
-| 3 | Boosting | 1 | 1 | 350$ | 900$ | gotówka / dirty | 🔧 do wdrożenia |
-| 4 | Bankomat — hack | 1 | 1 | 200$ | 700$ | black_money | ✅ aktywny |
-| 5 | Kasetka sklepowa | 1 | 2 | 250$ | 600$ | 50–70% dirty + gotówka | ✅ aktywny |
-| 6 | Tracker | 1 | 2 | 500$ | 1400$ | black_money | 🔧 do wdrożenia |
-| 7 | Sejf sklepu | 1 | 3 | 800$ | 2200$ | black_money | ✅ aktywny |
-| 8 | Jubiler | 2 | 5 | 1200$ | 4500$ | biżuteria → lombard | 🔧 do wdrożenia |
-| 9 | Bank Fleeca | 2 | 4 | 6000$ | 16000$ | black_money | ✅ aktywny |
-| 10 | Lombard | 1 | 3 | 600$ | 1800$ | gotówka + biżuteria | 🔧 do wdrożenia |
-| 11 | Jacht | 3 | 5 | 10000$ | 25000$ | black_money / loot | 🔧 do wdrożenia |
-| 12 | Bank Pacific | 4 | 6 | 35000$ | 90000$ | black_money / loot | ✅ aktywny |
-| 13 | Humane Labs | 3 | 5 | 22000$ | 55000$ | black_money / loot | 🔧 do wdrożenia |
-| 14 | Cayo Perico | 5 | 8 | 70000$ | 130000$ | black_money / loot | 🔧 do wdrożenia |
+| 1 | NPC | 1 | 1 | 25$ | 150$ | gotówka + biżuteria | Aktywny |
+| 2 | Bankomat — karta | 1 | 1 | 100$ | 350$ | gotówka | Aktywny |
+| 3 | Boosting | 1 | 1 | 350$ | 900$ | gotówka | Planowany |
+| 4 | Bankomat — hack | 1 | 1 | 200$ | 700$ | black_money | Aktywny |
+| 5 | Kasetka sklepowa | 1 | 2 | 250$ | 600$ | 50–70% dirty + gotówka | Aktywny |
+| 6 | Tracker | 1 | 2 | 500$ | 1400$ | black_money | Planowany |
+| 7 | Sejf sklepu | 1 | 3 | 800$ | 2200$ | black_money | Aktywny |
+| 8 | Jubiler | 2 | 5 | 1200$ | 4500$ | biżuteria → lombard | Planowany |
+| 9 | Bank Fleeca | 2 | 4 | 6000$ | 16000$ | black_money | Aktywny |
+| 10 | Napad na lombard | 1 | 3 | 600$ | 1800$ | gotówka + biżuteria | Planowany |
+| 11 | Jacht | 3 | 5 | 10000$ | 25000$ | black_money / loot | Planowany |
+| 12 | Bank Pacific | 4 | 6 | 35000$ | 90000$ | black_money / loot | Aktywny |
+| 13 | Humane Labs | 3 | 5 | 22000$ | 55000$ | black_money / loot | Planowany |
+| 14 | Cayo Perico | 5 | 8 | 70000$ | 130000$ | black_money / loot | Planowany |
 
-*Łup jubilera/lombardu/NPC w biżuterii = łączna wartość skupu w lombardzie (patrz tabela biżuterii).*
+*Łup w biżuterii = łączna wartość skupu w lombardzie (nie gotówka bezpośrednio).*
 
 ### Mnożniki nagrody (łączny loot)
+
+Mnożnik stosuje się do **łącznej** puli. Więcej osób ≠ proporcjonalnie więcej na osobę.
 
 ```lua
 Config.AttackerMultipliers = {
@@ -282,34 +294,139 @@ Config.AttackerMultipliers = {
 }
 ```
 
-### Szczegóły per napad
+---
 
-**1. NPC** — gotówka 25–150$ + biżuteria niskiej jakości (srebro, kolczyki: 15–45$/szt. w lombardzie). Szansa na telefon/bankcard.
+### 1. Napad na NPC
 
-**3. Boosting** — znajdź wskazane auto w mieście, dostarcz do punktu. Czas ~10–20 min, cooldown ~15 min.
+| Parametr | Wartość |
+|---|---|
+| Status | Aktywny (`rage_heists`) |
+| Gracze | 1 (solo) |
+| Mnożnik | brak |
+| Łup gotówka | 25–150$ |
+| Łup dodatkowy | Biżuteria niskiej jakości (12–55$/szt. skupu), bankcard, telefon (dark_lombard) |
+| Typ nagrody | Gotówka + itemy |
+| Policja min. | 1 |
+| Cooldown | ~15 s między próbami |
+| Czas akcji | ~30–60 s |
+| Wymagania | Broń zwiększa szansę (80% vs 20% bez broni) |
+| Sprzedaż lootu | Lombard / dark_lombard (Lester ×0.95) |
 
-**6. Tracker** — ucieczka przed LSPD autem z nadajnikiem GPS. Wymaga jazdy bez zatrzymania przez X min. 1–2 osoby.
+---
 
-**8. Jubiler** — loot to biżuteria średniej/wysokiej jakości (złoto, diamenty). Wartość łączna 1200–4500$ w lombardzie. Sprzedaż w lombardzie lub dark_lombardzie (×0.95).
+### 2. Bankomat — karta
 
-**10. Lombard** — gotówka 600–1800$ + biżuteria 800–2500$ wartości skupu. Część itemów sprzedaje się tylko w dark_lombardzie.
+| Parametr | Wartość |
+|---|---|
+| Status | Aktywny (`rage_heists`) |
+| Gracze | 1 (solo) |
+| Mnożnik | brak |
+| Łup | 100–350$ gotówki |
+| Typ nagrody | Czysta gotówka |
+| Policja min. | 0 |
+| Cooldown | Do ustalenia (~5 min per bankomat) |
+| Wymagania | Karta bankowa (loot z NPC, metadata illegal) |
+| Uwagi | Entry-level crime; bez narzędzi hackingowych |
 
-**11. Jacht** — między Fleeca a Pacific. Wymaga łodzi/transportu. Długi cooldown.
+---
 
-**13. Humane Labs** — między Pacific a Cayo pod wymaganiami; wymaga thermite + hacking.
+### 3. Boosting
 
-**14. Cayo Perico** — endgame. Wysoki koszt wejścia, długi cooldown, 5–8 osób, wymaga pełnego wyposażenia.
+| Parametr | Wartość |
+|---|---|
+| Status | Planowany (implementacja w `rage_heists` lub osobny resource) |
+| Gracze | 1 (solo) |
+| Mnożnik | ×1.0 |
+| Łup | 350–900$ gotówki |
+| Typ nagrody | Czysta gotówka |
+| Policja min. | 1 |
+| Cooldown | ~15 min |
+| Czas akcji | ~10–20 min (szukanie auta + dostawa) |
+| Wymagania | Brak thermite/hack; opcjonalnie lockpick |
+| Mechanika | Otrzymaj wskazane auto w mieście → dostarcz do punktu |
 
-### Loot na osobę — przykłady grupowe
+---
 
-**Kasetka (250–600$):**
+### 4. Bankomat — hack
+
+| Parametr | Wartość |
+|---|---|
+| Status | Aktywny (`rage_heists`) |
+| Gracze | 1 (solo) |
+| Mnożnik | brak |
+| Łup | 200–700$ black_money (łącznie ze stosów) |
+| Typ nagrody | black_money |
+| Policja min. | 1 (promień ~2500 m) |
+| Cooldown | Do ustalenia (~8–10 min) |
+| Wymagania | Hackingdevice (400–800$) |
+| Uwagi | Wyższe ryzyko niż karta; wymaga prania |
+
+---
+
+### 5. Kasetka sklepowa
+
+| Parametr | Wartość |
+|---|---|
+| Status | Aktywny (`rage_heists`) |
+| Gracze | 1–2 |
+| Mnożnik | 1 os. ×1.0 · 2 os. ×1.15 |
+| Łup łączny | 250–600$ |
+| Podział | 50–70% black_money, reszta gotówka |
+| Policja min. | 2 (promień ~3000 m) |
+| Cooldown | ~8 min (480 s) |
+| Czas akcji | do ~330 s |
+| Wymagania | Lockpick (80–200$) |
+| Lokalizacje | Sklepy Market + Liquor (`rage_market`) |
+
+**Loot na osobę:**
 
 | Os. | Mnożnik | Łącznie | Na osobę |
 |---:|---:|---:|---:|
 | 1 | ×1.0 | 250–600$ | 250–600$ |
 | 2 | ×1.15 | 287–690$ | 143–345$ |
 
-**Sejf (800–2200$):**
+---
+
+### 6. Tracker
+
+| Parametr | Wartość |
+|---|---|
+| Status | Planowany — istnieje `[rage]/BabiczTracker` (wymaga przeskalowania i integracji z progresją) |
+| Gracze | 1–2 |
+| Mnożnik | 1 os. ×1.0 · 2 os. ×1.10 |
+| Łup | 500–1400$ black_money |
+| Typ nagrody | black_money |
+| Policja min. | 1 |
+| Cooldown | ~20 min |
+| Czas akcji | ~15–25 min |
+| Wymagania | Opłata startowa ~200–400$; brak thermite |
+| Mechanika | Weź auto z nadajnikiem → ucieczka przed LSPD przez określony czas → punkt zrzutu |
+| Uwagi | Obecny config: nagrody 500–5000$, opłata startowa 500$ — do przeskalowania |
+
+**Loot na osobę (docelowo):**
+
+| Os. | Mnożnik | Łącznie | Na osobę |
+|---:|---:|---:|---:|
+| 1 | ×1.0 | 500–1400$ | 500–1400$ |
+| 2 | ×1.10 | 550–1540$ | 275–770$ |
+
+---
+
+### 7. Sejf sklepu
+
+| Parametr | Wartość |
+|---|---|
+| Status | Aktywny (`rage_heists`) |
+| Gracze | 1–3 |
+| Mnożnik | 1 os. ×1.0 · 2 os. ×1.2 · 3 os. ×1.35 |
+| Łup łączny | 800–2200$ black_money |
+| Policja min. | 2 (promień ~7500 m) |
+| Cooldown | ~10 min (600 s) globalny |
+| Czas akcji | 180–240 s |
+| Wymagania | Lockpick / drill (do ustalenia w implementacji) |
+| Uwagi | Wyraźnie wyższy próg niż kasetka; bonus lokacji Sandy do usunięcia lub przeskalowania |
+
+**Loot na osobę:**
 
 | Os. | Mnożnik | Łącznie | Na osobę |
 |---:|---:|---:|---:|
@@ -317,7 +434,48 @@ Config.AttackerMultipliers = {
 | 2 | ×1.2 | 960–2640$ | 480–1320$ |
 | 3 | ×1.35 | 1080–2970$ | 360–990$ |
 
-**Fleeca (6000–16000$, min. 2 os.):**
+---
+
+### 8. Jubiler
+
+| Parametr | Wartość |
+|---|---|
+| Status | Planowany (`rage_heists` — mnożnik w Config, brak aktywnego heistu) |
+| Gracze | 2–5 |
+| Mnożnik | 2 os. ×1.0 · 3 os. ×1.15 · 4 os. ×1.25 · 5 os. ×1.35 |
+| Łup | Biżuteria o łącznej wartości skupu **1200–4500$** |
+| Typ nagrody | Itemy → sprzedaż w lombardzie / dark_lombardzie |
+| Policja min. | 3 |
+| Cooldown | ~30 min |
+| Czas akcji | ~5–10 min |
+| Wymagania | Broń, opcjonalnie hackingdevice |
+| Loot | Pierścionki, łańcuszki, kolczyki, diamenty (patrz tabela biżuterii) |
+
+**Loot na osobę (przykład, baza 3000$):**
+
+| Os. | Mnożnik | Wartość łączna | Na osobę |
+|---:|---:|---:|---:|
+| 2 | ×1.0 | 1200–4500$ | 600–2250$ |
+| 3 | ×1.15 | 1380–5175$ | 460–1725$ |
+| 5 | ×1.35 | 1620–6075$ | 324–1215$ |
+
+---
+
+### 9. Bank Fleeca
+
+| Parametr | Wartość |
+|---|---|
+| Status | Aktywny (`rage_heists`) |
+| Gracze | 2–4 (min. 2 w promieniu 15 m) |
+| Mnożnik | 2 os. ×1.0 · 3 os. ×1.2 · 4 os. ×1.35 |
+| Łup łączny | 6000–16000$ black_money |
+| Policja min. | 4 (promień ~9500 m) |
+| Cooldown | ~15 min per lokalizacja |
+| Czas akcji | ~360 s |
+| Wymagania | Hackingdevice, wiertło |
+| Lokalizacje | 5 banków Fleeca |
+
+**Loot na osobę:**
 
 | Os. | Mnożnik | Łącznie | Na osobę |
 |---:|---:|---:|---:|
@@ -325,7 +483,75 @@ Config.AttackerMultipliers = {
 | 3 | ×1.2 | 7200–19200$ | 2400–6400$ |
 | 4 | ×1.35 | 8100–21600$ | 2025–5400$ |
 
-**Pacific (35000–90000$, min. 4 os.):**
+*Po praniu (25% straty): ok. 2250–6000$ czystego na osobę przy 2 napastnikach.*
+
+---
+
+### 10. Napad na lombard
+
+| Parametr | Wartość |
+|---|---|
+| Status | Planowany |
+| Gracze | 1–3 |
+| Mnożnik | 1 os. ×1.0 · 2 os. ×1.15 · 3 os. ×1.25 |
+| Łup gotówka | 600–1800$ |
+| Łup biżuteria | Itemy o wartości skupu **800–2500$** |
+| Typ nagrody | Gotówka + biżuteria → część itemów tylko w dark_lombardzie |
+| Policja min. | 2 |
+| Cooldown | ~20 min |
+| Czas akcji | ~3–6 min |
+| Wymagania | Broń, lockpick |
+| Uwagi | Oddzielny od „skupu” w lombardzie — to napad na lokal |
+
+**Loot na osobę (gotówka, baza 1200$):**
+
+| Os. | Mnożnik | Gotówka łącznie | Na osobę |
+|---:|---:|---:|---:|
+| 1 | ×1.0 | 600–1800$ | 600–1800$ |
+| 2 | ×1.15 | 690–2070$ | 345–1035$ |
+| 3 | ×1.25 | 750–2250$ | 250–750$ |
+
+---
+
+### 11. Napad na jacht
+
+| Parametr | Wartość |
+|---|---|
+| Status | Planowany (`rage_heists` — mnożnik w Config) |
+| Gracze | 3–5 |
+| Mnożnik | 3 os. ×1.0 · 4 os. ×1.15 · 5 os. ×1.30 |
+| Łup łączny | 10000–25000$ black_money (+ opcjonalny loot) |
+| Policja min. | 4–5 |
+| Cooldown | ~45–60 min |
+| Czas akcji | ~15–25 min |
+| Wymagania | Broń, łódź/transport, thermite opcjonalnie |
+| Uwagi | Poziom między Fleeca a Pacific; wymaga logistyki morskiej |
+
+**Loot na osobę (baza 17500$):**
+
+| Os. | Mnożnik | Łącznie | Na osobę |
+|---:|---:|---:|---:|
+| 3 | ×1.0 | 10000–25000$ | 3333–8333$ |
+| 4 | ×1.15 | 11500–28750$ | 2875–7187$ |
+| 5 | ×1.30 | 13000–32500$ | 2600–6500$ |
+
+---
+
+### 12. Bank Pacific
+
+| Parametr | Wartość |
+|---|---|
+| Status | Aktywny (`rage_heists` — custom implementacja) |
+| Gracze | 4–6 |
+| Mnożnik | 4 os. ×1.0 · 5 os. ×1.2 · 6 os. ×1.35 |
+| Łup łączny | 35000–90000$ (black_money + itemy do sprzedaży) |
+| Policja min. | 5 |
+| Cooldown | ~60–90 min (event serwera) |
+| Czas akcji | ~20–40 min |
+| Wymagania | Hackingdevice, hackingtablet, thermite, broń |
+| Uwagi | Obecnie minGroup=1 w config — docelowo min. 4 os.; loot w server flow |
+
+**Loot na osobę:**
 
 | Os. | Mnożnik | Łącznie | Na osobę |
 |---:|---:|---:|---:|
@@ -333,73 +559,102 @@ Config.AttackerMultipliers = {
 | 5 | ×1.2 | 42000–108000$ | 8400–21600$ |
 | 6 | ×1.35 | 47250–121500$ | 7875–20250$ |
 
-**Cayo Perico (70000–130000$, min. 5 os.):**
+---
+
+### 13. Humane Labs
+
+| Parametr | Wartość |
+|---|---|
+| Status | Planowany (`rage_heists` — mnożnik w Config) |
+| Gracze | 3–5 |
+| Mnożnik | 3 os. ×1.0 · 4 os. ×1.15 · 5 os. ×1.30 |
+| Łup łączny | 22000–55000$ black_money / loot |
+| Policja min. | 5 |
+| Cooldown | ~60 min |
+| Czas akcji | ~20–30 min |
+| Wymagania | Hackingdevice, hackingtablet, thermite, broń ciężka |
+| Uwagi | Poziom między Pacific a Cayo |
+
+**Loot na osobę (baza 38500$):**
+
+| Os. | Mnożnik | Łącznie | Na osobę |
+|---:|---:|---:|---:|
+| 3 | ×1.0 | 22000–55000$ | 7333–18333$ |
+| 4 | ×1.15 | 25300–63250$ | 6325–15812$ |
+| 5 | ×1.30 | 28600–71500$ | 5720–14300$ |
+
+---
+
+### 14. Cayo Perico (endgame)
+
+| Parametr | Wartość |
+|---|---|
+| Status | Planowany |
+| Gracze | 5–8 |
+| Mnożnik | 5 os. ×1.0 · 6 os. ×1.15 · 7 os. ×1.25 · 8 os. ×1.35 |
+| Łup łączny | 70000–130000$ black_money / loot |
+| Policja min. | 6+ |
+| Cooldown | ~2–4 h (event serwera) |
+| Czas akcji | ~30–60 min |
+| Wymagania | Pełen zestaw: hackingdevice, hackingtablet, thermite ×N, broń ciężka, transport |
+| Uwagi | Najwyższy tier crime; wymaga organizacji i przygotowania |
+
+**Loot na osobę:**
 
 | Os. | Mnożnik | Łącznie | Na osobę (brutto) |
 |---:|---:|---:|---:|
 | 5 | ×1.0 | 70000–130000$ | 14000–26000$ |
 | 6 | ×1.15 | 80500–149500$ | 13416–24916$ |
+| 7 | ×1.25 | 87500–162500$ | 12500–23214$ |
 | 8 | ×1.35 | 94500–175500$ | 11812–21937$ |
+
+*Po praniu (25% straty): ok. 8900–19500$ czystego na osobę przy 6 napastnikach.*
 
 ---
 
 ## Biżuteria i lombard
 
-Napady na NPC, jubilera i lombard dają biżuterię do sprzedaży. Ceny skupu docelowe (obecne wartości są ~8–10× za wysokie):
-
-| Item | Skup docelowy | Jakość / źródło |
+| Item | Skup docelowy | Źródło |
 |---|---:|---|
-| silver_ring | 15–25$ | NPC |
-| earrings | 12–20$ | NPC |
-| bracelet | 18–30$ | NPC |
-| wallet | 15–25$ | NPC |
+| silver_ring, earrings, bracelet, wallet | 12–30$ | NPC |
 | watch | 30–55$ | NPC / lombard |
-| gold_ring | 45–75$ | jubiler / lombard |
-| gold_chain | 55–90$ | jubiler |
-| necklace_silver | 35–60$ | jubiler |
-| necklace_gold | 55–90$ | jubiler |
-| earrings_gold | 40–70$ | jubiler |
-| earrings_diamond | 80–130$ | jubiler |
-| necklace_emerald | 90–150$ | jubiler |
+| gold_ring, gold_chain, necklace_* | 45–90$ | jubiler |
+| earrings_diamond, necklace_emerald | 80–150$ | jubiler |
 | diamond | 100–160$ | jubiler (rzadki) |
 | designer_bag | 70–120$ | jubiler / lombard |
+| phone, smartwatch (dark_lombard) | 35–70$ | NPC |
 
-Dark lombard (Lester): **×0.95** wartości skupu. Telefony i elektronika z NPC idą do dark_lombardu po obniżonych stawkach (telefon 40–70$, smartwatch 35–60$).
+Dark lombard (Lester): mnożnik **×0.95**.
 
 ---
 
 ## Narzędzia do napadów
 
-Obecne ceny hackingdevice (4000–5000$) są za wysokie względem zarobków. Docelowo narzędzia mają być dostępne po kilku godzinach side joba, nie po tygodniu.
+| Item | Docelowo | Obecnie | Użycie |
+|---|---:|---:|---|
+| Lockpick | 80–200$ | 1200$ | kasetka, NPC |
+| Hackingdevice | 400–800$ | 4000–5000$ | ATM hack, Fleeca |
+| Hackingtablet | 800–1500$ | 8000–10000$ | Pacific, Humane |
+| Thermite | 400–600$ | 2000$ | Pacific, Humane, Cayo |
 
-| Item | Cena docelowa | Używane w | Obecnie |
-|---|---:|---|---:|
-| Lockpick | 80–200$ | kasetka, NPC | 1200$ |
-| Hackingdevice | **400–800$** | ATM hack, Fleeca | 4000–5000$ |
-| Hackingtablet | **800–1500$** | Pacific, Humane | — |
-| Thermite | **400–600$** | Pacific, Humane, Cayo | 2000$ |
-| Wiertło / inne | 300–700$ | Fleeca | — |
-
-Przykład progresji: 3 h side joba (1500$) → lockpick + hackingdevice → pierwsze napady ATM/kasetka.
+Progresja: ~3 h side joba (1500$) → lockpick + hackingdevice → pierwsze napady.
 
 ---
 
 ## Pralnia pieniędzy
 
-| Typ | Strata | Prędkość / uwagi |
+| Typ | Strata | Uwagi |
 |---|---:|---|
 | Automatyczna | 35–45% | 25–75$/s (obecnie 175$/s) |
-| Ręczna trasa | 20–30% | 3000–7500$/punkt, wypłata po kursie |
-
-Przykład: Fleeca 6000$ dirty → ręczne pranie 25% straty → **4500$ czystego**.
+| Ręczna trasa | 20–30% | 3000–7500$/punkt |
 
 ---
 
-## Narkotyki — pełna tabela
+## Narkotyki
 
-Źródła produkcji: `rage_drugs`, KQ weed, inne. Docelowy zarobek: **1500–2500$/h** (wolniejsze, powtarzalne crime — poniżej napadów).
+Docelowy zarobek: **800–1500$/h** typowo | **1500–2200$/h** aktywna sesja.
 
-| Item | Ilość / trans. | Szansa | Cena obecna | **Cena docelowa** |
+| Item | Ilość | Szansa | Obecnie | Docelowo |
 |---|---:|---:|---:|---:|
 | joint | 1–2 | 70% | 75–150$ | 25–45$ |
 | magic_mushrooms_dry | 1–8 | 65% | 87–147$ | 20–40$ |
@@ -419,13 +674,11 @@ Przykład: Fleeca 6000$ dirty → ręczne pranie 25% straty → **4500$ czystego
 | coke | 1–2 | 60% | 750–950$ | 130–190$ |
 | coke_bag | 1–3 | 65% | 850–1050$ | 150–220$ |
 
-Szacunek: ~8–12 udanych transakcji/h × ~100$ średnio = **800–1200$/h** czystej sprzedaży + koszt produkcji i czasu → realnie **1500–2500$/h** przy pełnym loopie.
-
 ---
 
 ## Koszty życia i usługi
 
-| Rzecz | Docelowo | Obecnie |
+| Pozycja | Docelowo | Obecnie |
 |---|---:|---:|
 | Woda | 5–10$ | 20$ |
 | Proste jedzenie | 8–20$ | 36$ |
@@ -439,6 +692,7 @@ Szacunek: ~8–12 udanych transakcji/h × ~100$ średnio = **800–1200$/h** czy
 | Lokalny medyk | 500–1500$ | 50–10000$ |
 | Lokalny mechanik | 500–1500$ | 1000–5000$ |
 | Naprawa z garażu | 500–1500$ | 1500$ |
+| Odsprzedaż pojazdu | 65% ceny zakupu | 65% |
 | Startowy bank | 2500$ | 2500$ |
 
 ---
@@ -457,64 +711,70 @@ Szacunek: ~8–12 udanych transakcji/h × ~100$ średnio = **800–1200$/h** czy
 
 ## Mieszkania (qs-housing)
 
-Osobna iteracja po głównym przeskalowaniu. Raty i czynsze muszą być spójne z bazą 500$/h — inaczej mieszkania staną się tańsze niż dobre auto.
+Osobna iteracja po głównym przeskalowaniu. Raty i czynsze muszą być spójne z kotwicą 500$/h.
 
 ---
 
 ## Kolejność wdrożenia
 
-1. Paycheck + zasiłek 60$/h + warunek on duty  
-2. Prace dorywcze (KQ priorytet)  
+1. Paycheck + zasiłek + warunek on duty  
+2. Prace dorywcze (KQ — priorytet)  
 3. Mandaty MDT + usługi EMS/DOJ  
-4. Premie tygodniowe bossmenu  
+4. Premie tygodniowe (bossmenu — implementacja tierów)  
 5. Napady aktywne + narzędzia crime  
 6. Pralnia  
-7. Narkotyki  
+7. Narkotyki + lombard  
 8. Sklepy, usługi, bronie  
 9. Pojazdy  
-10. Nowe napady (boosting, tracker, jubiler, lombard, jacht, humane, cayo)  
+10. Napady planowane (boosting, tracker, jubiler, lombard, jacht, humane, cayo)  
 11. qs-housing  
 
 ---
 
-## Decyzje — podsumowanie
+## Zakres i ograniczenia dokumentu
 
-| Temat | Status |
+| W zakresie v2 | Poza zakresem / osobna iteracja |
 |---|---|
-| Zasiłek 60$/h | ✅ |
-| Model wypłat: aktywny + premia tygodniowa | ✅ |
-| DOJ wyższa minutówka + podatki na konto society | ✅ |
-| Obniżone mandaty i usługi | ✅ |
-| Obniżone premie tygodniowe (~36 h/tydz.) | ✅ |
-| Pełna progresja napadów (14 typów) | ✅ |
-| Wszystkie narkotyki w tabeli | ✅ |
-| Tańsze narzędzia napadów | ✅ |
-| Endgame auta / helikoptery / samoloty | ✅ |
-| Mandaty MDT per wykroczenie (szczegóły) | ⏳ wdrożenie |
-| qs-housing | ⏳ osobna iteracja |
-| Nowe napady (boosting, tracker itd.) | ⏳ implementacja |
+| Paycheck, side joby, frakcje, firmy, crime | qs-housing (szczegóły rat i czynszów) |
+| 14 napadów (7 aktywnych + 7 planowanych) | Mandaty MDT per wykroczenie (tabela w wdrożeniu) |
+| Narkotyki (17 itemów), lombard, pralnia | Paliwo (`ox_fuel`) — do ustalenia |
+| Pojazdy, sklepy, usługi, bronie | Zadania Fernando, hunter job — niski priorytet |
+| | FIB — paycheck jak LSPD; brak osobnych widełek |
+
+**Napad truckera** w komentarzu `rage_heists/Config.lua` nie wchodzi w progresję v2 — do ewentualnego dodania osobno.
 
 ---
 
-## Analiza balansu
+## Status decyzji
 
-### Co jest spójne
+| Temat | Status |
+|---|---|
+| Zasiłek 60$/h | Ustalone |
+| Model wypłat: aktywny + premia tygodniowa | Ustalone |
+| Skala typowy / aktywna sesja | Ustalone |
+| DOJ: wyższa minutówka + podatki society | Ustalone |
+| Mandaty i usługi — widełki ogólne | Ustalone |
+| Premie tygodniowe (~36 h/tydz., max 10k) | Ustalone |
+| Progresja 14 napadów (pełne karty) | Ustalone |
+| Narkotyki — tabela per item | Ustalone |
+| Narzędzia napadów | Ustalone |
+| Pojazdy — segmenty i limity | Ustalone |
+| Side job 500 vs 550–600$/h (kotwica) | Do decyzji |
+| Cooldowny ATM (karta/hack) | Do decyzji |
+| Mandaty MDT per wykroczenie | Wdrożenie |
+| qs-housing | Osobna iteracja |
+| Napady planowane (7 szt.) | Implementacja |
 
-- **Kotwica 500$/h** (60$ zasiłek + 440$ praca) daje sensowny progres do pierwszego auta w kilka godzin i endgame w **~2400 h** side joba.
-- **Hierarchia zarobków** ma sens: zasiłek < side job < firma < frakcja < crime < właściciel firmy.
-- **Obniżone mandaty i aktywny zarobek frakcji** (200–600$/h normalnie) eliminują ryzyko 1.2 mln w 10 dni — przy 6 h/d frakcjonariusz zarabia ~200–700$/h realnie, czyli **~43k–151k/tydzień**, nie 1.2 mln.
-- **DOJ** ma sensowny model: wyższa minutówka (100–120$/h) + podatki na society + sporadyczne sprawy.
-- **Progresja napadów** (14 stopni) daje długi crime endgame — Cayo wymaga grupy 5–8 osób i pełnego wyposażenia.
-- **Narzędzia 400–800$** są osiągalne po kilku godzinach, thermite 500$ OK.
-- **Narkotyki 1500–2500$/h** — poniżej napadów, nie dominują nad resztą crime.
+---
 
-### Na co uważać
+## Podsumowanie
 
-| Ryzyko | Opis | Mitygacja |
-|---|---|---|
-| KQ nie przeskalowane | Side job nadal 20k+/h | priorytet #2 wdrożenia |
-| Gracze 10 h/d | Przy crime 2800$/h → endgame auto w ~43 dni | akceptowalne; Cayo/samolot wymagają grupy |
-| Biżuteria + napady chain | NPC → jubiler → lombard w pętli | cooldowny + malejące szanse |
-| EMS kursy | Powtarzalne, stabilne — mogą dominować nad LSPD | monitorować; ewentualnie cap dzienny |
-| Stare ceny w kodzie | Wszystko jest 5–40× za drogie | wdrożenie musi być **globalne i synchroniczne** |
-| qs-housing | Nieprzeskalowane mieszkania mogą być tańsze niż auta | osobna iteracja |
+Dokument jest **spójny i kompletny na etapie planowania**. Kluczowe założenia:
+
+- **Kotwica side job ~500$/h** + zasiłek 60$/h daje sensowny progres (pierwsze auto w kilka godzin).
+- **Luka zarobków** jest akceptowalna przy rozróżnieniu typowy / aktywna sesja — spokojna służba LSPD nie dominuje nad side jobem.
+- **14 napadów** ma pełne karty: gracze, łup, mnożniki, policja, cooldown, wymagania.
+- **7 napadów planowanych** wymaga implementacji — zespół powinien traktować je jako roadmap, nie obecny stan serwera.
+- **Wdrożenie musi być globalne** — szczególnie KQ Deliveries/Powerwashing, bez tego plan traci sens.
+
+**Warunki poprawnego balansu po wdrożeniu:** synchronizacja wszystkich configów, górne widełki jako sufit sesji (nie stała stawka), testy po deployu.

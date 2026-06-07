@@ -44,9 +44,7 @@ Side job (~500$/h) jest kotwicą ekonomii. Pozostałe ścieżki odnoszą się do
 | DOJ | 400–700 | 0.8–1.4× | 1100–1600 | 2.2–3.2× |
 | Crime | 700–1200 | 1.4–2.4× | 1800–2800 | 3.0–4.7× |
 
-Przy **samym paychecku** (~120$/h) i braku interakcji zarobek jest niski — dlatego v2 używa modelu **podłoga + interakcje** (patrz sekcja Frakcje). Side job pozostaje kotwicą solo; frakcja na małym serwerze nie powinna wymagać tłumu graczy, żeby być opłacalna.
-
-Kotwica side job (500$/h vs 550–600$/h) — patrz sekcja **Status decyzji**.
+Kotwica side job (500$/h vs 550–600$/h) — **Status decyzji**.
 
 ### Tempo progresu (orientacyjne)
 
@@ -70,99 +68,84 @@ Przy 6 h/dzień i endgame auto: **~67 tygodni** (side job), **~42 tygodnie** (ty
 | Bezrobotny (zasiłek) | 15$ | 60$ | brak aktywnej pracy / off-duty |
 | Praca dorywcza | 15$ | 60$ | on duty; reszta z aktywności jobu |
 | Firma prywatna `c_*` | 10–15$ | 40–60$ | on duty |
-| LSPD / LSSD / EMS | 30$ | 120$ | on duty (składnik podłogi) |
-| DOJ | 35–38$ | 140–150$ | on duty (składnik podłogi) |
+| LSPD / LSSD / FIB | 105–112$ | 420–448$ | on duty |
+| EMS | 72–78$ | 288–312$ | on duty |
+| DOJ | 118–125$ | 472–500$ | on duty |
 
-**Zasady:** wypłata co 15 min na konto gracza. Paycheck to **część podłogi służbowej**, nie cały dochód frakcji. Reszta podłogi — stypendium aktywnej służby (patrz niżej). DOJ — wyższa minutówka ze względu na mniej powtarzalnych kursów niż EMS.
+Wypłata co 15 min, on duty. Czas AFK odejmowany od czasu służby.
 
 ---
 
 ## Frakcje publiczne
 
-### Model skalowalny (10 vs 50 graczy online)
-
-Jeden model na cały lifecycle serwera — **bez** dynamicznego mnożnika „online graczy”. Składa się z dwóch warstw:
-
-| Warstwa | Od czego zależy | Rola |
-|---|---|---|
-| **Podłoga służbowa** | czas on duty + aktywność (nie AFK) | gwarantuje ~400–450$/h **bez** mandatów i revive |
-| **Zarobek z interakcji** | inni gracze, eventy, sprawy | dodaje 0–800+$/h; rośnie naturalnie przy większej populacji |
-
-**Dlaczego to działa na małym serwerze:** policjant z 1–2 mandatami/h nie musi polegać wyłącznie na graczach — ma sensowną stawkę za obecność i patrol. **Dlaczego nie psuje dużego serwera:** przy 50 graczach i wielu mandatach/revive główny dochód i tak pochodzi z interakcji (600–1200+$/h), a podłoga (~400$/h) stanowi ułamek typowej sesji, nie dominuje ekonomii.
-
-**Warunek anty-AFK (stypendium):** w ostatnich 15 min gracz musi spełnić min. 1 kryterium: przesunięcie >200 m **lub** interakcja służbowa (mdt, radio, revive, mandat, kurs EMS) **lub** czas w strefie patrolu. Brak aktywności → tylko paycheck (120$/h), bez stypendium.
-
 ### Model wypłat
 
-| Źródło | Kiedy | Rola |
+| Źródło | Interwał | Udział w dochodzie |
 |---|---|---|
-| Paycheck | co 15 min, on duty | 120–150$/h (składnik podłogi) |
-| Stypendium aktywnej służby | co 15 min, on duty + aktywność | 280–300$/h → **podłoga razem ~400–420$/h** |
-| Zarobek z interakcji | natychmiast po akcji | 0–800+$/h; skaluje się z populacją |
-| Premia tygodniowa | bossmenu, raz/tydz. | dodatek; +50–120$/h średnio przy 36 h/tydz. |
+| Minutówka (paycheck) | co 15 min, on duty | główne — DOJ; bazowe — LSPD/FIB; uzupełniające — EMS |
+| Mandaty / faktury / usługi | po akcji | uzupełnienie — LSPD/FIB; główne — EMS |
+| Premia tygodniowa | bossmenu, 1×/tydz. | dodatek |
 
-| Frakcja | Podłoga (paycheck + stypendium) | Uwagi |
-|---|---:|---|
-| LSPD / LSSD / EMS | **~400$/h** | 120 + 280 |
-| DOJ | **~420$/h** | 140–150 + 270–280 |
+| Frakcja | Minutówka $/h | Interakcje | Minutówka w typ. dochodzie (~10 online) |
+|---|---:|---|---:|
+| DOJ | 472–500 | rzadkie (licencje, sprawy) | ~85–95% |
+| LSPD / LSSD / FIB | 420–448 | opcjonalne (mandaty) | ~75–90% |
+| EMS | 288–312 | częste (revive) + kursy NPC | ~50–60% |
 
-### Zarobek z interakcji — widełki
+| Frakcja | Typowy razem $/h (~10 online) | Typowy razem $/h (~50 online) |
+|---|---:|---:|
+| DOJ | 520–580 | 620–780 |
+| LSPD / LSSD / FIB | 460–520 | 640–880 |
+| EMS | 500–580 | 900–1400 |
 
-| Poziom | Dodatkowy $/h | Kontekst |
-|---|---:|---|
-| Mały serwer (~10 online) | 20–120 | 1–2 mandaty/h, rzadki revive |
-| Średni serwer (~25 online) | 120–400 | regularne mandaty, revive, kursy EMS |
-| Duży serwer (~50 online) | 400–800+ | dużo interakcji, eventy, poważne sprawy |
+### Scenariusze (1 h)
 
-Opcjonalnie (faza 2): **miękki limit** ~500$/h z samych mandatów na funkcjonariusza — nadwyżka na konto frakcji (society). Chroni przed inflacją przy peak online; nie jest wymagany na start.
+Średni mandat 100$, udział funkcjonariusza 25% → 25$/mandat.
 
-### Scenariusze — ten sam model, różna populacja
+| Online | Frakcja | Minutówka | Interakcje | Razem $/h |
+|---:|---|---:|---:|---:|
+| ~10 | LSPD, 1–2 mandaty | 440 | 25–50 | 465–490 |
+| ~10 | LSPD, 0 mandatów | 440 | 0 | 440 |
+| ~10 | EMS, 2 kursy + 1 revive | 300 | 200–280 | 500–580 |
+| ~10 | DOJ, 1 sprawa | 480 | 50–125 | 530–605 |
+| ~10 | DOJ, 0 spraw | 480 | 0 | 480 |
+| ~25 | LSPD, ~4 mandaty | 440 | ~100 | ~540 |
+| ~50 | LSPD, ~8 mandatów | 440 | 200–400 | 640–840 |
+| ~50 | EMS, aktywna sesja | 300 | 600–1100 | 900–1400 |
+| ~50 | DOJ, ~4 sprawy | 480 | 200–500 | 680–980 |
 
-Założenia mandatów: średni mandat **100$**, udział funkcjonariusza **25%** → **25$/mandat**.
-
-| Scenariusz | Podłoga | Interakcje | Razem $/h |
+| Scenariusz | Minutówka | Interakcje | Razem $/h |
 |---|---:|---:|---:|
-| **10 graczy** — LSPD, 1–2 mandaty/h | ~400$ | ~25–50$ | **~425–450$** |
-| **10 graczy** — EMS, 1 revive + kurs NPC | ~400$ | ~80–150$ | **~480–550$** |
-| **25 graczy** — LSPD, ~4 mandaty/h | ~400$ | ~100$ | **~500$** |
-| **50 graczy** — LSPD, ~8 mandatów/h + drobne sprawy | ~400$ | ~250–400$ | **~650–800$** |
-| **50 graczy** — EMS, aktywna sesja (revive, kursy) | ~400$ | ~600–1000$ | **~1000–1400$** |
-| Off-duty / AFK na służbie (brak stypendium) | ~120$ | 0$ | **~120$/h** |
+| LSPD, 4 mandaty | 440 | ~100 | ~540 |
+| FIB, 2 mandaty | 440 | ~50 | ~490 |
+| EMS, 6× revive (~80$ udziału) | 300 | ~480 | ~780 |
+| EMS, 3 kursy NPC (~80$ udziału) | 300 | ~240 | ~540 |
+| DOJ, 2 sprawy × ~100$ (25%) | 480 | ~200 | ~680 |
 
-Porównanie z side jobem (~450–550$/h): frakcja na **małym serwerze** jest w tym samym paśmie co side job; na **dużym** naturalnie wychodzi wyżej — zgodnie z hierarchią v2.
+### LSPD / LSSD / FIB
 
-**Przykłady szczegółowe (1 h, średni serwer):**
-
-| Scenariusz | Podłoga | Interakcje | Razem |
-|---|---:|---:|---:|
-| LSPD, 4 mandaty × ~25$ | ~400$ | ~100$ | ~500$/h |
-| EMS, 6× revive (~80$ udziału) | ~400$ | ~480$ | ~880$/h |
-| DOJ, 2 sprawy × ~100$ (25%) | ~420$ | ~200$ | ~620$/h |
-
-### LSPD / LSSD
-
-Paycheck + mandaty/faktury (25% kwoty) + okazjonalne konwoje i sprawy.
+| Element | Wartość |
+|---|---|
+| Minutówka | 420–448$/h |
+| Mandaty / faktury | 25% kwoty |
+| Konwoje, sprawy | okazjonalnie |
 
 ### EMS
 
-Paycheck + stypendium + revive/leczenie (25%) + **kursy do lokalnych medyków** (główne powtarzalne źródło **niezależne od liczby graczy** — ważne na małym serwerze).
-
-| Źródło PvE (mały serwer) | Docelowo |
+| Element | Wartość |
 |---|---|
-| Kurs EMS → lokalny medyk | 200–500$ / kurs, ~2–4/h możliwe solo |
-| Stypendium patrolu | jak LSPD (~280$/h) |
+| Minutówka | 288–312$/h |
+| Revive / leczenie | 25% kwoty |
+| Kurs EMS → lokalny medyk | 200–500$ / kurs, 2–4/h solo |
 
 ### DOJ
 
-| Element | Założenie |
+| Element | Wartość |
 |---|---|
-| Paycheck gracza | 140–150$/h — wyższy niż LSPD/EMS (składnik podłogi) |
-| Stypendium służby | ~270–280$/h — podłoga razem ~420$/h |
-| Zarobek aktywny | wyroki, ugody, licencje — nieregularny |
-| Konto DOJ (society) | 10% od podatków (mandaty, sprzedaż firm, salon pojazdów, usługi EMS itd.) |
+| Minutówka | 472–500$/h (~85–95% typ. dochodu) |
+| Zarobek z akcji | licencje, ugody, wyroki — rzadkie |
+| Konto DOJ (society) | 10% od podatków |
 | Premia tygodniowa | jak pozostałe frakcje |
-
-Środki society DOJ finansują frakcję i premie — nie trafiają bezpośrednio do gracza.
 
 ### Mandaty (docelowe kwoty)
 
@@ -903,7 +886,7 @@ FIB korzysta z tego samego modelu co LSPD/LSSD:
 
 | Element | Wartość |
 |---|---|
-| Paycheck | 250$/15 min (1000$/h) → docelowo **120$/h** + stypendium **280$/h** = podłoga ~400$/h |
+| Paycheck | 250$/15 min → LSPD/FIB **105–112$/15 min**; EMS **72–78$/15 min**; DOJ **118–125$/15 min** |
 | Udział z mandatów | **25%** kwoty (jak LSPD) |
 | Mnożnik frakcji | 2.5× |
 | Katalog mandatów | ten sam co LSPD (`policeFines`) |
@@ -1049,10 +1032,9 @@ Udział wystawiającego: LSPD/FIB/EMS **25%**, firmy mechaniczne **40%**.
 | Temat | Status |
 |---|---|
 | Zasiłek 60$/h | Ustalone |
-| Model wypłat: podłoga + interakcje + premia tygodniowa | Ustalone |
-| Podłoga służbowa ~400$/h (paycheck + stypendium) | Ustalone |
-| Stypendium — warunek anty-AFK | Do wdrożenia |
-| Miękki limit mandatów → society (opcjonalnie) | Do ustalenia (faza 2) |
+| Model wypłat: minutówka + interakcje + premia tygodniowa | Ustalone |
+| Minutówka: DOJ 472–500; LSPD/FIB 420–448; EMS 288–312 $/h | Ustalone |
+| Miękki limit mandatów → society | Do ustalenia |
 | Skala typowy / aktywna sesja | Ustalone |
 | DOJ: wyższa minutówka + podatki society | Ustalone |
 | Mandaty i usługi — widełki ogólne | Ustalone |
@@ -1076,13 +1058,10 @@ Udział wystawiającego: LSPD/FIB/EMS **25%**, firmy mechaniczne **40%**.
 
 Dokument obejmuje **pełny zakres ekonomii serwera**: zarobki, crime, frakcje, koszty życia, nieruchomości, utrzymanie pojazdów i moduły pomocnicze. Kluczowe założenia:
 
-- **Kotwica side job ~500$/h** + zasiłek 60$/h daje sensowny progres (pierwsze auto w kilka godzin).
-- **Luka zarobków** jest akceptowalna przy rozróżnieniu typowy / aktywna sesja — spokojna służba LSPD nie dominuje nad side jobem.
-- **14 napadów** ma pełne karty: gracze, łup, mnożniki, policja, cooldown, wymagania.
-- **Endgame auto max 1.2 mln; endgame dom max ~800k.**
-- **7 napadów planowanych** wymaga implementacji — traktować jako roadmap.
-- **Wdrożenie musi być globalne** — szczególnie KQ Deliveries/Powerwashing.
+- Kotwica side job ~500$/h; zasiłek 60$/h.
+- Minutówka: DOJ 472–500$/h; LSPD/FIB 420–448$/h; EMS 288–312$/h.
+- 14 napadów — pełne karty w dokumencie.
+- Endgame auto max 1.2 mln; endgame dom max ~800k.
+- 7 napadów planowanych — implementacja.
 
-Checklista per skrypt: [`ekonomia-wdrozenie.md`](ekonomia-wdrozenie.md).
-
-**Warunki poprawnego balansu po wdrożeniu:** synchronizacja wszystkich configów, górne widełki jako sufit sesji (nie stała stawka), testy po deployu.
+[`ekonomia-wdrozenie.md`](ekonomia-wdrozenie.md)

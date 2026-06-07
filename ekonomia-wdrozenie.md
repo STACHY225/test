@@ -11,12 +11,9 @@ Legenda statusu: `Planowany` | `Do ustalenia` | `Gotowe do wdrożenia`
 
 | Plik | Co zmienić | Obecnie | Docelowo | Status |
 |---|---|---|---|---|
-| `[core]/es_extended/server/paycheck.lua` | Stawki, warunek on duty, rozróżnienie jobów | 125$/15 min wszyscy; 250$/15 min frakcje/firmy (police, doj, ambulance, fib, c_*); bez on duty | Zasiłek 15$/15 min; LSPD/LSSD/EMS/FIB **30$/15 min** (120$/h); DOJ **35–38$/15 min**; tylko on duty | Planowany |
-| `[core]/es_extended/server/paycheck.lua` lub nowy moduł | **Stypendium aktywnej służby** | brak | +70$/15 min (~280$/h) gdy on duty + aktywność (ruch / MDT / akcja służbowa); podłoga razem ~400$/h | Planowany |
-| `[core]/es_extended/config.lua` | `PaycheckInterval`, `StartingAccountMoney` | 15 min; bank 2500$ | Bez zmian interwału; bank 2500$ OK | Planowany |
-| SQL `job_grades.salary` | Grade salaries (jeśli reaktywowane) | Różne w DB | Zgodnie z nowym modelem lub wyłączone | Do ustalenia |
-
-**Stypendium — logika wdrożenia:** co 15 min sprawdzenie: `on duty` + (przesunięcie >200 m w oknie **lub** mandat/revive/kurs **lub** strefa patrolu). Spełnione → wypłata stypendium; inaczej tylko paycheck 120$/h.
+| `[core]/es_extended/server/paycheck.lua` | Stawki per frakcja, on duty | 125$/15 min cywile; 250$/15 min frakcje; bez on duty | Zasiłek 15$/15 min; LSPD/LSSD/FIB **105–112$/15 min**; EMS **72–78$/15 min**; DOJ **118–125$/15 min**; tylko on duty | Planowany |
+| `[core]/es_extended/config.lua` | `PaycheckInterval`, `StartingAccountMoney` | 15 min; bank 2500$ | bez zmian | Planowany |
+| SQL `job_grades.salary` | Grade salaries | różne w DB | zgodnie z modelem lub wyłączone | Do ustalenia |
 
 ---
 
@@ -104,7 +101,9 @@ Pełna lista: wszystkie wpisy w `local policeFines` → przeskalować wg tabeli 
 
 | Plik | Co zmienić | Obecnie | Docelowo | Status |
 |---|---|---|---|---|
-| `[core]/es_extended/server/paycheck.lua` | Grupa frakcji | fib → 250$/15 min | jak LSPD: 30$/15 min + stypendium (~400$/h podłoga) | Planowany |
+| `[core]/es_extended/server/paycheck.lua` | `police`, `fib` | 250$/15 min | 105–112$/15 min (420–448$/h) | Planowany |
+| `[core]/es_extended/server/paycheck.lua` | `ambulance` | 250$/15 min | 72–78$/15 min (288–312$/h) | Planowany |
+| `[core]/es_extended/server/paycheck.lua` | `doj` | 250$/15 min | 118–125$/15 min (472–500$/h) | Planowany |
 | `[rage]/rage_mdt/Config.lua` | `Config.Fines.fib` | `policeFines` | ten sam katalog po przeskalowaniu | Planowany |
 | `[rage]/rage_mdt/Config.lua` | `finePercentForPlayer` (fib) | 25% | 25% (bez zmian) | Planowany |
 

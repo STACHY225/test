@@ -44,7 +44,7 @@ Side job (~500$/h) jest kotwicą ekonomii. Pozostałe ścieżki odnoszą się do
 | DOJ | 400–700 | 0.8–1.4× | 1100–1600 | 2.2–3.2× |
 | Crime | 700–1200 | 1.4–2.4× | 1800–2800 | 3.0–4.7× |
 
-Przy spokojnej służbie bez interakcji z graczami (np. LSPD bez mandatów) zarobek wynosi ok. **85$/h** — poniżej side joba. Wyższe widełki frakcji i crime wymagają aktywnej gry, współpracy z innymi graczami oraz — w przypadku crime — ponoszenia ryzyka i cooldownów. Firma prywatna stanowi przejście między side jobem a frakcją.
+Przy **samym paychecku** (~120$/h) i braku interakcji zarobek jest niski — dlatego v2 używa modelu **podłoga + interakcje** (patrz sekcja Frakcje). Side job pozostaje kotwicą solo; frakcja na małym serwerze nie powinna wymagać tłumu graczy, żeby być opłacalna.
 
 Kotwica side job (500$/h vs 550–600$/h) — patrz sekcja **Status decyzji**.
 
@@ -70,40 +70,74 @@ Przy 6 h/dzień i endgame auto: **~67 tygodni** (side job), **~42 tygodnie** (ty
 | Bezrobotny (zasiłek) | 15$ | 60$ | brak aktywnej pracy / off-duty |
 | Praca dorywcza | 15$ | 60$ | on duty; reszta z aktywności jobu |
 | Firma prywatna `c_*` | 10–15$ | 40–60$ | on duty |
-| LSPD / LSSD / EMS | 20–22$ | 80–88$ | on duty |
-| DOJ | 25–30$ | 100–120$ | on duty |
+| LSPD / LSSD / EMS | 30$ | 120$ | on duty (składnik podłogi) |
+| DOJ | 35–38$ | 140–150$ | on duty (składnik podłogi) |
 
-**Zasady:** wypłata co 15 min na konto gracza; DOJ — wyższa minutówka ze względu na brak powtarzalnych kursów i usług jak w EMS.
+**Zasady:** wypłata co 15 min na konto gracza. Paycheck to **część podłogi służbowej**, nie cały dochód frakcji. Reszta podłogi — stypendium aktywnej służby (patrz niżej). DOJ — wyższa minutówka ze względu na mniej powtarzalnych kursów niż EMS.
 
 ---
 
 ## Frakcje publiczne
 
+### Model skalowalny (10 vs 50 graczy online)
+
+Jeden model na cały lifecycle serwera — **bez** dynamicznego mnożnika „online graczy”. Składa się z dwóch warstw:
+
+| Warstwa | Od czego zależy | Rola |
+|---|---|---|
+| **Podłoga służbowa** | czas on duty + aktywność (nie AFK) | gwarantuje ~400–450$/h **bez** mandatów i revive |
+| **Zarobek z interakcji** | inni gracze, eventy, sprawy | dodaje 0–800+$/h; rośnie naturalnie przy większej populacji |
+
+**Dlaczego to działa na małym serwerze:** policjant z 1–2 mandatami/h nie musi polegać wyłącznie na graczach — ma sensowną stawkę za obecność i patrol. **Dlaczego nie psuje dużego serwera:** przy 50 graczach i wielu mandatach/revive główny dochód i tak pochodzi z interakcji (600–1200+$/h), a podłoga (~400$/h) stanowi ułamek typowej sesji, nie dominuje ekonomii.
+
+**Warunek anty-AFK (stypendium):** w ostatnich 15 min gracz musi spełnić min. 1 kryterium: przesunięcie >200 m **lub** interakcja służbowa (mdt, radio, revive, mandat, kurs EMS) **lub** czas w strefie patrolu. Brak aktywności → tylko paycheck (120$/h), bez stypendium.
+
 ### Model wypłat
 
 | Źródło | Kiedy | Rola |
 |---|---|---|
-| Paycheck | co 15 min, on duty | podłoga 80–120$/h |
-| Zarobek aktywny | natychmiast po akcji | 0–1200$/h zależnie od aktywności |
+| Paycheck | co 15 min, on duty | 120–150$/h (składnik podłogi) |
+| Stypendium aktywnej służby | co 15 min, on duty + aktywność | 280–300$/h → **podłoga razem ~400–420$/h** |
+| Zarobek z interakcji | natychmiast po akcji | 0–800+$/h; skaluje się z populacją |
 | Premia tygodniowa | bossmenu, raz/tydz. | dodatek; +50–120$/h średnio przy 36 h/tydz. |
 
-### Zarobek aktywny — widełki
+| Frakcja | Podłoga (paycheck + stypendium) | Uwagi |
+|---|---:|---|
+| LSPD / LSSD / EMS | **~400$/h** | 120 + 280 |
+| DOJ | **~420$/h** | 140–150 + 270–280 |
+
+### Zarobek z interakcji — widełki
 
 | Poziom | Dodatkowy $/h | Kontekst |
 |---|---:|---|
-| Spokojna służba | 0–200 | patrol, brak interakcji |
-| Normalna służba | 200–600 | mandaty, revive, drobne sprawy |
-| Wysoka aktywność | 600–1200 | eventy, dużo interakcji, poważne sprawy |
+| Mały serwer (~10 online) | 20–120 | 1–2 mandaty/h, rzadki revive |
+| Średni serwer (~25 online) | 120–400 | regularne mandaty, revive, kursy EMS |
+| Duży serwer (~50 online) | 400–800+ | dużo interakcji, eventy, poważne sprawy |
 
-**Przykłady (1 h):**
+Opcjonalnie (faza 2): **miękki limit** ~500$/h z samych mandatów na funkcjonariusza — nadwyżka na konto frakcji (society). Chroni przed inflacją przy peak online; nie jest wymagany na start.
 
-| Scenariusz | Paycheck | Aktywność | Razem |
+### Scenariusze — ten sam model, różna populacja
+
+Założenia mandatów: średni mandat **100$**, udział funkcjonariusza **25%** → **25$/mandat**.
+
+| Scenariusz | Podłoga | Interakcje | Razem $/h |
 |---|---:|---:|---:|
-| LSPD, zero mandatów | ~85$ | 0$ | ~85$/h |
-| LSPD, 4 mandaty × ~120$ (25%) | ~85$ | ~120$ | ~205$/h |
-| EMS, 6× revive (~80$ udziału) | ~85$ | ~480$ | ~565$/h |
-| DOJ, spokojna służba | ~110$ | 0$ | ~110$/h |
-| DOJ, 2 sprawy × ~400$ (25%) | ~110$ | ~200$ | ~310$/h |
+| **10 graczy** — LSPD, 1–2 mandaty/h | ~400$ | ~25–50$ | **~425–450$** |
+| **10 graczy** — EMS, 1 revive + kurs NPC | ~400$ | ~80–150$ | **~480–550$** |
+| **25 graczy** — LSPD, ~4 mandaty/h | ~400$ | ~100$ | **~500$** |
+| **50 graczy** — LSPD, ~8 mandatów/h + drobne sprawy | ~400$ | ~250–400$ | **~650–800$** |
+| **50 graczy** — EMS, aktywna sesja (revive, kursy) | ~400$ | ~600–1000$ | **~1000–1400$** |
+| Off-duty / AFK na służbie (brak stypendium) | ~120$ | 0$ | **~120$/h** |
+
+Porównanie z side jobem (~450–550$/h): frakcja na **małym serwerze** jest w tym samym paśmie co side job; na **dużym** naturalnie wychodzi wyżej — zgodnie z hierarchią v2.
+
+**Przykłady szczegółowe (1 h, średni serwer):**
+
+| Scenariusz | Podłoga | Interakcje | Razem |
+|---|---:|---:|---:|
+| LSPD, 4 mandaty × ~25$ | ~400$ | ~100$ | ~500$/h |
+| EMS, 6× revive (~80$ udziału) | ~400$ | ~480$ | ~880$/h |
+| DOJ, 2 sprawy × ~100$ (25%) | ~420$ | ~200$ | ~620$/h |
 
 ### LSPD / LSSD
 
@@ -111,13 +145,19 @@ Paycheck + mandaty/faktury (25% kwoty) + okazjonalne konwoje i sprawy.
 
 ### EMS
 
-Paycheck + revive/leczenie (25%) + **kursy do lokalnych medyków** (główne, powtarzalne źródło).
+Paycheck + stypendium + revive/leczenie (25%) + **kursy do lokalnych medyków** (główne powtarzalne źródło **niezależne od liczby graczy** — ważne na małym serwerze).
+
+| Źródło PvE (mały serwer) | Docelowo |
+|---|---|
+| Kurs EMS → lokalny medyk | 200–500$ / kurs, ~2–4/h możliwe solo |
+| Stypendium patrolu | jak LSPD (~280$/h) |
 
 ### DOJ
 
 | Element | Założenie |
 |---|---|
-| Paycheck gracza | 100–120$/h — wyższy niż LSPD/EMS |
+| Paycheck gracza | 140–150$/h — wyższy niż LSPD/EMS (składnik podłogi) |
+| Stypendium służby | ~270–280$/h — podłoga razem ~420$/h |
 | Zarobek aktywny | wyroki, ugody, licencje — nieregularny |
 | Konto DOJ (society) | 10% od podatków (mandaty, sprzedaż firm, salon pojazdów, usługi EMS itd.) |
 | Premia tygodniowa | jak pozostałe frakcje |
@@ -609,17 +649,43 @@ Config.AttackerMultipliers = {
 
 ## Biżuteria i lombard
 
-| Item | Skup docelowy | Źródło |
-|---|---:|---|
-| silver_ring, earrings, bracelet, wallet | 12–30$ | NPC |
-| watch | 30–55$ | NPC / lombard |
-| gold_ring, gold_chain, necklace_* | 45–90$ | jubiler |
-| earrings_diamond, necklace_emerald | 80–150$ | jubiler |
-| diamond | 100–160$ | jubiler (rzadki) |
-| designer_bag | 70–120$ | jubiler / lombard |
-| phone, smartwatch (dark_lombard) | 35–70$ | NPC |
+Dark lombard (Lester): mnożnik **×0.95**. Telefony i elektronika z NPC → `dark_lombard`.
 
-Dark lombard (Lester): mnożnik **×0.95**.
+| Item | Obecnie | Docelowo |
+|---|---:|---:|
+| silver_ring | 180–280$ | 15–25$ |
+| earrings | 160–260$ | 12–20$ |
+| bracelet | 220–340$ | 18–30$ |
+| wallet | 240–360$ | 15–25$ |
+| powerbank | 210–330$ | 12–22$ |
+| headphones | 260–420$ | 18–30$ |
+| watch | 450–800$ | 30–55$ |
+| earrings_silver | 260–420$ | 20–35$ |
+| bracelet_silver | 320–520$ | 22–38$ |
+| gold_ring | 650–1050$ | 45–75$ |
+| earrings_gold | 420–680$ | 40–70$ |
+| necklace_silver | 500–820$ | 35–60$ |
+| gold_chain | 800–1250$ | 55–90$ |
+| watch_silver | 650–1050$ | 40–65$ |
+| watch_gold | 950–1500$ | 55–85$ |
+| smartwatch | 550–900$ | 35–60$ |
+| vintage_camera | 700–1150$ | 45–75$ |
+| designer_bag | 900–1400$ | 70–120$ |
+| phone | 750–1250$ | 40–70$ (dark) |
+| sapphire_ring | 850–1350$ | 55–90$ |
+| ruby_ring | 880–1400$ | 55–90$ |
+| emerald_ring | 900–1450$ | 55–90$ |
+| thornburn_turquoise_ring | 980–1550$ | 60–95$ |
+| earrings_ruby | 760–1220$ | 50–80$ |
+| earrings_emerald | 820–1300$ | 55–85$ |
+| earrings_turquoise | 700–1120$ | 45–72$ |
+| earrings_diamond | 980–1600$ | 80–130$ |
+| bracelet_gold | 520–860$ | 40–70$ |
+| necklace_gold | 760–1220$ | 55–90$ |
+| necklace_emerald | 1000–1620$ | 90–150$ |
+| necklace_sapphire | 960–1540$ | 85–140$ |
+| necklace_ruby | 980–1580$ | 88–145$ |
+| diamond | 155–160$ | 100–160$ |
 
 ---
 
@@ -704,37 +770,275 @@ Docelowy zarobek: **800–1500$/h** typowo | **1500–2200$/h** aktywna sesja.
 
 ---
 
-## Mieszkania (qs-housing)
+## Mieszkania (`qs-housing`)
 
-Osobna iteracja po głównym przeskalowaniu. Raty i czynsze muszą być spójne z kotwicą 500$/h.
+Ceny domów są **per lokalizacja** (`Config.Houses` + baza danych). Poniżej widełki docelowe segmentów — do zastosowania przy audycie DB i tworzeniu nowych nieruchomości.
+
+### Segmenty cenowe
+
+| Segment | Cena | Czas @ 500$/h | Uwagi |
+|---|---:|---:|---|
+| Garaż / komórka / najtańsze | 15000–25000$ | 30–50 h | entry housing |
+| Mieszkanie starter | 25000–50000$ | 50–100 h | pierwsza nieruchomość |
+| Mieszkanie standard | 50000–100000$ | 100–200 h | porównywalne z dobrym autem |
+| Dom średni | 100000–200000$ | 200–400 h | |
+| Dom duży | 200000–400000$ | 400–800 h | |
+| Premium / willa | 400000–650000$ | 800–1300 h | poniżej endgame auta (1.2 mln) |
+| Max (rzadkie lokacje) | 650000–800000$ | 1300–1600 h | hard cap nieruchomości |
+
+**Zasada:** endgame dom **nie powinien przewyższać** endgame auta osobowego (1.2 mln).
+
+### Opłaty przy zakupie
+
+| Opłata | % | Przykład @ 100k$ |
+|---|---:|---:|
+| Bank | 10% | 10000$ |
+| Pośrednik (broker) | 5% | 5000$ |
+| Podatki | 5% | 5000$ |
+| **Razem** | **~20%** | **~20000$** |
+
+### Hipoteka i czynsz
+
+| Parametr | Obecnie | Docelowo |
+|---|---|---|
+| Hipoteka włączona | tak | tak |
+| `CreditEq` (spłata %) | 30% co 5 min | **5–8% co 30–60 min** |
+| Czynsz (wynajem) | co 5 min / miesięcznie | **0,3–0,8% wartości / tydzień gry** |
+| Max domów na gracza | 5 | 5 |
+
+Obecny model (30% co 5 min) jest zbyt agresywny po deflacji — wymaga zmiany w config.
+
+### Rachunki (bills)
+
+| Typ | Obecnie | Docelowo |
+|---|---|---|
+| Woda | 30–150$ | 15–40$ |
+| Internet | 80–300$ | 25–80$ |
+| Prąd | 50$/kWh | 12–20$/kWh |
+| Interwał naliczania | co 1 h | co 1 h |
+
+### Upgrade'y posesji
+
+| Upgrade | Obecnie | Docelowo |
+|---|---:|---:|
+| Alarm | 10000$ | 2500–4000$ |
+| Kamery | 35000$ | 8000–12000$ |
+| Czujnik ruchu | 45000$ | 10000–15000$ |
+| Sejf | 50000$ | 12000–18000$ |
+| Rozbudowa mebli | 60000$ | 15000–22000$ |
+| Dzwonek | 15000$ | 3500–5500$ |
+| Asystent Aura | 30000$ | 7000–11000$ |
+| Dekoracje ścienne | 25000$ | 6000–9000$ |
+
+### Meble i klucze
+
+| Element | Obecnie | Docelowo |
+|---|---:|---:|
+| Meble (IKEA) | 61–2500$+ | 30–800$ (większość 50–400$) |
+| Klucz do domu (meta key) | 500$ | 150–300$ |
+| Prowizja od sprzedaży mebli | 30% | 30% (bez zmian) |
+
+---
+
+## Paliwo i utrzymanie pojazdu
+
+| Pozycja | Obecnie | Docelowo |
+|---|---:|---:|
+| Tankowanie (`priceTick`) | 8$/tick | 2–4$/tick |
+| Kanister | 1500$ | 400–700$ |
+| Uzupełnienie kanistra | 1000$ | 250–500$ |
+| Kanister eco | 800$ | 200–400$ |
+| Myjnia (brud × stawka) | brud × 12$ | brud × 4–8$ |
+| Tablica rejestracyjna (custom) | 750000$ | 15000–40000$ |
+| Jazda testowa (salon) | 80$ | 50–100$ |
+| Współwłaściciel garażu | 5000$ | 1500–3000$ |
+
+---
+
+## Wygląd postaci
+
+| Usługa | Obecnie | Docelowo |
+|---|---:|---:|
+| Sklep odzieżowy | 200$ | 80–150$ |
+| Fryzjer | 180$ | 60–120$ |
+| Tatuaż | 750$ | 250–500$ |
+| Maski | 50$ | 25–50$ |
+
+Źródło: `[rage]/rage_multicharacter/Config.lua`
+
+---
+
+## Siłownia
+
+| Karnet | Obecnie | Docelowo |
+|---|---:|---:|
+| 7 dni | 500$ | 150–250$ |
+| 14 dni | 900$ | 250–400$ |
+| 30 dni | 1500$ | 400–700$ |
+| 90 dni | 4000$ | 1000–1800$ |
+
+Źródło: `[rage]/RageCity/Config.lua` → `Config.Gym`
+
+---
+
+## Ubezpieczenie zdrowotne (EMS)
+
+| Karnet | Obecnie | Docelowo |
+|---|---:|---:|
+| 7 dni | 3500$ | 800–1200$ |
+| 14 dni | 6000$ | 1400–2000$ |
+| 30 dni | 12000$ | 2500–3500$ |
+| Zniżka na usługi medyczne | −50% | −50% (bez zmian) |
+
+| Opłata | Obecnie | Docelowo |
+|---|---:|---:|
+| Respawn (brak EMS) | 500$ | 150–300$ |
+| Respawn (EMS online) | 5000$ | 800–1500$ |
+
+---
+
+## FIB
+
+FIB korzysta z tego samego modelu co LSPD/LSSD:
+
+| Element | Wartość |
+|---|---|
+| Paycheck | 250$/15 min (1000$/h) → docelowo **120$/h** + stypendium **280$/h** = podłoga ~400$/h |
+| Udział z mandatów | **25%** kwoty (jak LSPD) |
+| Mnożnik frakcji | 2.5× |
+| Katalog mandatów | ten sam co LSPD (`policeFines`) |
+| Premie tygodniowe | jak pozostałe frakcje |
+
+Typowy / aktywna sesja: jak LSPD/LSSD (500–900 / 1400–2000$/h).
+
+---
+
+## Frakcja mechanik
+
+### Lokalny mechanik (NPC)
+
+| Warunek | Obecnie | Docelowo |
+|---|---:|---:|
+| Brak mechaników online | 1000$ | 500–800$ |
+| Mechanicy online | 5000$ | 1000–1500$ |
+
+### Tuning (frakcja)
+
+| Element | Wartość |
+|---|---|
+| Split | firma 35% · DOJ 10% · zwrot klientowi 10% |
+| Ceny modów | % ceny pojazdu — przeskalować po `vehicles.json` |
+
+Źródło: `BabiczTuningMenu_sv.lua`, `BabiczMechanic_shared.lua`
+
+---
+
+## Prace dorywcze — uzupełnienie
+
+### Kaucje pojazdów / strojów
+
+| Praca | Kaucja pojazd | Kaucja strój |
+|---|---:|---:|
+| Górnik | 1500$ → **400–600$** | 500$ → **100–200$** |
+| Drwal | 2500$ → **600–900$** | 500$ → **100–200$** |
+| Krawiec | 1500$ → **400–600$** | 500$ → **100–200$** |
+| Rzeźnik | 500$ → **150–250$** | 500$ → **100–200$** |
+| Myśliwy | 2500$ → **600–900$** | — |
+| Śmieciarz | 1500$ → **400–600$** | 500$ → **100–200$** |
+
+### Myśliwy (hunter)
+
+| Item | Obecnie | Docelowo |
+|---|---:|---:|
+| meat_boar | 128$ | 45–55$ |
+| meat_deer | 183$ | 65–75$ |
+| skin_boar | 85$ | 30–38$ |
+| skin_deer | 116$ | 40–48$ |
+| boar_tusks | 228$ | 80–95$ |
+| deer_horns | 300$ | 105–120$ |
+
+Docelowy zarobek: **450–600$/h** (+ zasiłek 60$/h).
+
+### Śmieciarz
+
+Obecnie brak pętli wypłaty w configu — **do implementacji** (docelowo ~450–550$/h) lub wyłączenia z job center.
+
+---
+
+## Sprzedaż narkotyków — parametry
+
+| Parametr | Obecnie | Docelowo |
+|---|---|---|
+| Min. policjantów online | 2 | 2 |
+| Szansa wezwania policji | 65% | 65% |
+| Strefa sprzedaży | 1 (duży promień) | bez zmian |
+| Blacklisted jobs | police, doj, fib | bez zmian |
+
+Ceny per item — tabela w sekcji **Narkotyki**.
+
+---
+
+## Zadania Fernando (Moris)
+
+Tutorial / progresja crime. Nie są głównym źródłem dochodu po wdrożeniu v2.
+
+| Zadanie | Obecnie | Docelowo |
+|---|---|---|
+| 1 — paczki | 250–750$ dirty / paczka | 80–200$ dirty |
+| 2 — pralnia (wypłata) | 8000–12000$ czyste + 25000$ dirty do prania | 1500–2500$ czyste + 4000–6000$ dirty |
+| 3 — sprzedaż weed_packed | 5000–8000$ dirty + sprzedaż | 1200–2000$ dirty + sprzedaż |
+| 4 — poszukiwacz | 7000–10000$ | 1500–2500$ |
+| Cooldown zad. 2 | 24 h | 24 h |
+
+---
+
+## Mandaty MDT — skala docelowa
+
+Pełna tabela per wykroczenie w [`ekonomia-wdrozenie.md`](ekonomia-wdrozenie.md). Zasady ogólne:
+
+| Kategoria | Obecnie (przykłady) | Docelowo |
+|---|---:|---:|
+| Drobne wykroczenia | 1000–2000$ | 30–150$ |
+| Średnie | 3000–10000$ | 150–800$ |
+| Ciężkie | 25000–50000$ | 800–3000$ |
+| Najcięższe (zabójstwo itd.) | 50000$+ | 3000–8000$ |
+
+Udział wystawiającego: LSPD/FIB/EMS **25%**, firmy mechaniczne **40%**.
 
 ---
 
 ## Kolejność wdrożenia
 
 1. Paycheck + zasiłek + warunek on duty  
-2. Prace dorywcze (KQ — priorytet)  
-3. Mandaty MDT + usługi EMS/DOJ  
-4. Premie tygodniowe (bossmenu — implementacja tierów)  
+2. Prace dorywcze (KQ — priorytet) + hunter  
+3. Mandaty MDT + usługi EMS/DOJ + FIB  
+4. Premie tygodniowe (bossmenu)  
 5. Napady aktywne + narzędzia crime  
-6. Pralnia  
-7. Narkotyki + lombard  
-8. Sklepy, usługi, bronie  
-9. Pojazdy  
-10. Napady planowane (boosting, tracker, jubiler, lombard, jacht, humane, cayo)  
-11. qs-housing  
+6. Pralnia + lombard (pełna tabela) + narkotyki  
+7. Sklepy, usługi, bronie, paliwo, wygląd, siłownia  
+8. Pojazdy (`vehicles.json` + `VehiclePriceConfig`)  
+9. Mechanik (lokalny + tuning)  
+10. Napady planowane + Tracker + Fernando  
+11. qs-housing (DB + config)  
+12. Job center UI  
 
 ---
 
-## Zakres i ograniczenia dokumentu
+## Zakres dokumentu
 
-| W zakresie v2 | Poza zakresem / osobna iteracja |
+| Moduł | Status w v2 |
 |---|---|
-| Paycheck, side joby, frakcje, firmy, crime | qs-housing (szczegóły rat i czynszów) |
-| 14 napadów (7 aktywnych + 7 planowanych) | Mandaty MDT per wykroczenie (tabela w wdrożeniu) |
-| Narkotyki (17 itemów), lombard, pralnia | Paliwo (`ox_fuel`) — do ustalenia |
-| Pojazdy, sklepy, usługi, bronie | Zadania Fernando, hunter job — niski priorytet |
-| | FIB — paycheck jak LSPD; brak osobnych widełek |
+| Paycheck, side joby, frakcje, firmy, crime | Opisane |
+| 14 napadów | Opisane (7 aktywnych + 7 planowanych) |
+| Narkotyki, lombard, pralnia | Opisane |
+| Pojazdy, sklepy, bronie | Opisane |
+| Mieszkania (segmenty, opłaty, bills) | Opisane |
+| Paliwo, wygląd, siłownia, ubezpieczenie | Opisane |
+| FIB, mechanik, hunter, Fernando | Opisane |
+| Mandaty MDT per wykroczenie | Wdrożenie (szczegóły w `ekonomia-wdrozenie.md`) |
+| Śmieciarz | Do implementacji |
+| Napad truckera | Poza progresją v2 |
+| KQ weed (produkcja) | Produkcja pozostaje; ceny sprzedaży w tabeli narkotyków |
 
 **Napad truckera** w komentarzu `rage_heists/Config.lua` nie wchodzi w progresję v2 — do ewentualnego dodania osobno.
 
@@ -745,31 +1049,40 @@ Osobna iteracja po głównym przeskalowaniu. Raty i czynsze muszą być spójne 
 | Temat | Status |
 |---|---|
 | Zasiłek 60$/h | Ustalone |
-| Model wypłat: aktywny + premia tygodniowa | Ustalone |
+| Model wypłat: podłoga + interakcje + premia tygodniowa | Ustalone |
+| Podłoga służbowa ~400$/h (paycheck + stypendium) | Ustalone |
+| Stypendium — warunek anty-AFK | Do wdrożenia |
+| Miękki limit mandatów → society (opcjonalnie) | Do ustalenia (faza 2) |
 | Skala typowy / aktywna sesja | Ustalone |
 | DOJ: wyższa minutówka + podatki society | Ustalone |
 | Mandaty i usługi — widełki ogólne | Ustalone |
 | Premie tygodniowe (~36 h/tydz., max 10k) | Ustalone |
 | Progresja 14 napadów (pełne karty) | Ustalone |
 | Narkotyki — tabela per item | Ustalone |
+| Lombard — pełna tabela | Ustalone |
 | Narzędzia napadów | Ustalone |
 | Pojazdy — segmenty i limity | Ustalone |
-| Side job 500 vs 550–600$/h (kotwica) | Do decyzji |
-| Cooldowny ATM (karta/hack) | Do decyzji |
+| Mieszkania — segmenty cenowe | Ustalone |
+| Hipoteka / czynsz — rebalance | Do ustalenia (5–8% / 30–60 min) |
+| Side job 500 vs 550–600$/h (kotwica) | Do ustalenia |
+| Cooldowny ATM (karta/hack) | Do ustalenia |
 | Mandaty MDT per wykroczenie | Wdrożenie |
-| qs-housing | Osobna iteracja |
+| Śmieciarz | Do implementacji |
 | Napady planowane (7 szt.) | Implementacja |
 
 ---
 
 ## Podsumowanie
 
-Dokument jest **spójny i kompletny na etapie planowania**. Kluczowe założenia:
+Dokument obejmuje **pełny zakres ekonomii serwera**: zarobki, crime, frakcje, koszty życia, nieruchomości, utrzymanie pojazdów i moduły pomocnicze. Kluczowe założenia:
 
 - **Kotwica side job ~500$/h** + zasiłek 60$/h daje sensowny progres (pierwsze auto w kilka godzin).
 - **Luka zarobków** jest akceptowalna przy rozróżnieniu typowy / aktywna sesja — spokojna służba LSPD nie dominuje nad side jobem.
 - **14 napadów** ma pełne karty: gracze, łup, mnożniki, policja, cooldown, wymagania.
-- **7 napadów planowanych** wymaga implementacji — zespół powinien traktować je jako roadmap, nie obecny stan serwera.
-- **Wdrożenie musi być globalne** — szczególnie KQ Deliveries/Powerwashing, bez tego plan traci sens.
+- **Endgame auto max 1.2 mln; endgame dom max ~800k.**
+- **7 napadów planowanych** wymaga implementacji — traktować jako roadmap.
+- **Wdrożenie musi być globalne** — szczególnie KQ Deliveries/Powerwashing.
+
+Checklista per skrypt: [`ekonomia-wdrozenie.md`](ekonomia-wdrozenie.md).
 
 **Warunki poprawnego balansu po wdrożeniu:** synchronizacja wszystkich configów, górne widełki jako sufit sesji (nie stała stawka), testy po deployu.

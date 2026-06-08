@@ -1,13 +1,6 @@
 # RageCity — docelowa ekonomia serwera (v2)
 
-Dokument planistyczny do analizy zespołowej. Opisuje **docelowy stan** ekonomii po przeskalowaniu — bez wdrożenia w kodzie.
-
-| Dokument | Przeznaczenie |
-|---|---|
-| **Ten plik** | Wizja, balans, widełki — **pełny zakres ekonomii serwera** |
-| [`ekonomia-wdrozenie.md`](ekonomia-wdrozenie.md) | Checklista zmian per skrypt + tabele MDT |
-| `docs/ekonomia-*-discord.txt` | Snapshoty stanu obecnego (configy) |
-| `docs/_gen_mdt_fines_table.py` | Generator tabel MDT (police / EMS / mechanik) |
+Dokument dla zespołu: **docelowy stan** ekonomii po przeskalowaniu — widełki zarobków, kosztów, progresji i zasad balansu.
 
 ---
 
@@ -140,7 +133,7 @@ Wypłata co 15 min, on duty. Czas AFK odejmowany od czasu służby.
 | Minutówka | 460–500$/h |
 | Revive / leczenie | 25% kwoty |
 | Kurs EMS → lokalny medyk | 200–500$ / kurs, 2–4/h solo |
-| `BabiczHospitality` (leczenie random pedów) | 100–500$ / pacjent (osobny resource; nie w `server.cfg`) | **scalić z widełkami kursu EMS** lub wyłączyć przy wdrożeniu |
+| `BabiczHospitality` (leczenie random pedów) | 100–500$ / pacjent (opcjonalny resource EMS) | **scalić z widełkami kursu EMS** lub wyłączyć |
 
 ### DOJ
 
@@ -161,7 +154,7 @@ Wypłata co 15 min, on duty. Czas AFK odejmowany od czasu służby.
 | Przestępstwo | 500–1200$ | 125–300$ |
 | Ciężkie przestępstwo | 1200–3000$ | 300–750$ |
 
-Szczegółowa tabela per wykroczenie (MDT) — w pliku wdrożeniowym.
+Szczegółowa tabela per wykroczenie (MDT) — przy implementacji (230 police, 76 EMS, 8 mechanik).
 
 ### Usługi EMS / DOJ
 
@@ -337,7 +330,7 @@ types = {
 | Powerwashing (KQ) | 440–690$ | 60$ | 500–750$ |
 | Trucker | 540–790$ | 60$ | 600–850$ |
 
-**Uwaga wdrożeniowa:** KQ Deliveries i Powerwashing — obecnie ~20k–30k+/h; wymagają ~40× obniżki, inaczej kotwica 500$/h nie będzie respektowana.
+**Ważne:** KQ Deliveries i Powerwashing — obecnie ~20k–30k+/h; wymagają ~40× obniżki, inaczej kotwica 500$/h nie będzie respektowana.
 
 ---
 
@@ -1314,7 +1307,7 @@ Tutorial / progresja crime. Nie są głównym źródłem dochodu po wdrożeniu v
 
 ## Mandaty MDT — skala docelowa
 
-Pełna tabela per wykroczenie w [`ekonomia-wdrozenie.md`](ekonomia-wdrozenie.md). Zasady ogólne:
+Skala docelowa (szczegóły per wykroczenie — przy implementacji MDT):
 
 | Kategoria | Obecnie (przykłady) | Docelowo |
 |---|---:|---:|
@@ -1537,7 +1530,7 @@ Firma **logistyczna** — tylko kurs + paycheck `c_*` + premie.
 | Gracze | 1–3, mnożnik do ×1.8 | bez zmian struktury |
 | Progresja 14 napadów | **nie wchodzi** | osobny heist / event |
 
-**Status:** poza główną progresją; rescale lub wyłączenie do decyzji właściciela.
+**Status:** poza główną progresją; rescale lub wyłączenie — decyzja zespołu.
 
 ---
 
@@ -1559,11 +1552,11 @@ Karnety — sekcja Gym w kosztach życia. Sklep = opcjonalny boost statów, nie 
 
 ---
 
-## Premie bossmenu — implementacja
+## Premie bossmenu — wymagania systemu
 
-Koncepcja tierów — § Premie tygodniowe. **Kod obecnie:** `BabiczBossMenu:sendSalary` — dowolna kwota z society, **bez capu tygodniowego**.
+Koncepcja tierów — § Premie tygodniowe. Obecnie premia z bossmenu nie ma capu tygodniowego — docelowo:
 
-| Wymaganie wdrożeniowe | Opis |
+| Wymaganie | Opis |
 |---|---|
 | Tier z `duty_time` | mapowanie godzin/tydz. → max premia (tabela v2) |
 | Cap **10 000$/os./tydz.** | hard limit w `sendSalary` |
@@ -1619,47 +1612,43 @@ Koncepcja tierów — § Premie tygodniowe. **Kod obecnie:** `BabiczBossMenu:sen
 
 ## Eventy sezonowe (poza stałą ekonomią)
 
-| Event | Plik | Zarobek | Status v2 |
-|---|---|---|---|
-| Wielkanoc / znajdźki (`rage_znajdzki`) | sprzedaż jaj 150–200$/szt. | incydentalny | **Poza scope** — włączać tylko na event; nie w `server.cfg` |
-| Dynie (`BabiczPumpkins`) | 100$/dynia | incydentalny | **Poza scope** — event sezonowy |
-| Kaucje zwrot (side joby) | `BabiczJobs_sv.lua` | refund, nie netto | opisane w § Prace dorywcze |
+| Event | Zarobek | Uwagi |
+|---|---|---|
+| Wielkanoc / znajdźki | sprzedaż jaj 150–200$/szt. | **Poza scope** — krótki event, nie wpływa na balans |
+| Dynie | 100$/dynia | **Poza scope** — event sezonowy |
+| Kaucje zwrot (side joby) | refund, nie netto | § Prace dorywcze |
 
 ---
 
-## Audyt form zarobku (kompletność)
+## Mapa źródeł dochodu
 
-Przegląd codebase vs ten dokument (czerwiec 2026). **Wszystkie stałe źródła dochodu gracza są opisane** w sekcjach powyżej lub oznaczone jako poza scope.
-
-| Kategoria | Źródła | Sekcja v2 |
+| Kategoria | Źródła | Gdzie w dokumencie |
 |---|---|---|
 | **Paycheck** | zasiłek, frakcje, firmy `c_*` | § Paycheck |
 | **Side joby** | miner, tailor, slaughterer, lumberjack, hunter, beach_vendor | § Prace dorywcze |
 | **KQ** | deliveries, powerwashing, trucker | § Prace dorywcze |
 | **Frakcje** | minutówka, MDT 25–40%, EMS kursy, bossmenu premia/wypłata | § Frakcje, § Premie |
-| **EMS dodatkowe** | `ambulance_localTasks`, `BabiczHospitality` | § EMS |
+| **EMS dodatkowe** | kursy lokalne, BabiczHospitality | § EMS |
 | **Firmy** | kursy paczkowe, paycheck, bossmenu | § Firmy |
 | **Mechanik** | tuning 10%, MDT 40% | § Mechanik |
 | **Crime** | drugsales, pralnia, lombard, KQ weed → sprzedaż | § Crime, § Narkotyki |
-| **Napady aktywne** | NPC, ATM×2, kasetka, sejf, Fleeca | § Napady #1–9 |
-| **Napady** | Pacific (loot do implementacji), 7 planowanych, trucker poza progresją | § Napady |
-| **Zadania** | Fernando ×4, Rico bricki | § Zadania |
+| **Napady** | NPC, ATM, kasetka, sejf, Fleeca, Pacific, planowane | § Napady |
+| **Zadania** | Fernando ×4, Rico | § Zadania |
 | **Hazard** | kasyno, zdrapki, kręgle | § Kasyno, § Zdrapki |
 | **Garaże** | buyback dealer, sprzedaż P2P (+2% DOJ) | § Garaże |
 | **Nieruchomości** | czynsz dla wynajmującego | § Mieszkania |
-| **Start** | bank ESX + gotówka multichar | § Systemowe |
-| **Redystrybucja** | banking, telefon, trade ESX | § Systemowe (nie grind) |
+| **Start** | bank + gotówka na nowej postaci | § Systemowe |
+| **Redystrybucja** | przelewy bankowe, telefon | § Systemowe (nie grind) |
 
-| Wykluczone świadomie | Powód |
+| Poza stałą ekonomią | Powód |
 |---|---|
-| Śmieciarz | brak payout w kodzie |
-| Tracker / boosting | brak payout |
-| `inspir` heist | nie w `fxmanifest` / `server.cfg` |
-| Eventy sezonowe | krótkotrwałe, poza balansem |
-| Admin / bot | staff |
-| Więzienie | tylko skrócenie wyroku |
+| Śmieciarz | brak wypłaty w obecnym jobie |
+| Tracker / boosting | brak nagrody |
+| Eventy sezonowe | krótkotrwałe |
+| Admin | tylko staff |
+| Więzienie | skrócenie wyroku, bez $ |
 
-**Luka kod ↔ dokument:** Bank Pacific — karta v2 gotowa, **wypłata w server do dopisania** przy wdrożeniu napadu.
+**Bank Pacific:** karta napadu ustalona — wymaga dopisania wypłaty lootu przy implementacji.
 
 ---
 
@@ -1682,19 +1671,19 @@ Przegląd codebase vs ten dokument (czerwiec 2026). **Wszystkie stałe źródła
 | Firmy — kursy, sklepy, Blazing Tattoo, Five Records | Opisane |
 | Beach vendor | Opisane |
 | Garaże P2P (+2% DOJ), buyback, współwłaściciel | Opisane |
-| Audyt form zarobku | Opisane |
-| Eventy sezonowe, kręgle, wynajem landlord | Opisane / poza scope |
-| Start multichar (gotówka + bank) | Opisane |
-| Kurs lawetą mechanika | Planowany (implementacja) |
-| MDT police (230) + EMS (76) + mechanik (8) | Gotowe (wdrożenie) |
+| Mapa źródeł dochodu | Opisane |
+| Eventy sezonowe, kręgle, wynajem | Opisane / poza scope |
+| Start (gotówka + bank) | Opisane |
+| Kurs lawetą mechanika | Planowany |
+| MDT police (230) + EMS (76) + mechanik (8) | Ustalone |
 | Zdrapki, automaty, platetape | Opisane |
-| Premie bossmenu — spec implementacji | Opisane |
+| Premie bossmenu — wymagania systemu | Opisane |
 | Plan testów po deployu | Opisane |
 | Śmieciarz | **Poza scope** |
-| Napad truckera | Poza progresją (karta rescale) |
-| `vehicles.json` / qs-housing DB | Poza scope (właściciel) |
+| Napad truckera | Poza progresją |
+| Ceny pojazdów per model + housing DB | Osobna praca konwersji |
 
-**Napad truckera** w komentarzu `rage_heists/Config.lua` nie wchodzi w progresję v2 — do ewentualnego dodania osobno.
+**Napad truckera** nie wchodzi w progresję v2 — ewentualnie osobny heist / event.
 
 ---
 
@@ -1730,7 +1719,7 @@ Przegląd codebase vs ten dokument (czerwiec 2026). **Wszystkie stałe źródła
 | Dark Shop + dual Ammunation | Ustalone |
 | Sprzedaż P2P aut — podatek **2% DOJ**, sprzedawca 98% | Ustalone |
 | Beach vendor poza job center | Ustalone |
-| Premie bossmenu — enforce tier + cap 10k | Ustalone (implementacja) |
+| Premie bossmenu — tier + cap 10k | Ustalone |
 | MDT EMS 76 pozycji | Ustalone |
 | Mieszkania — segmenty cenowe | Ustalone |
 | Hipoteka (5–8% / 30–60 min) | Ustalone |
@@ -1738,8 +1727,8 @@ Przegląd codebase vs ten dokument (czerwiec 2026). **Wszystkie stałe źródła
 | Miękki limit mandatów → society | **Odrzucone** — nie wdrażać |
 | Śmieciarz | **Poza scope** — nie w job center, ignorować w v2 |
 | Napady planowane (7 szt.) | Implementacja |
-| `vehicles.json` — konwersja per model | Poza scope dokumentu (właściciel) |
-| qs-housing DB — ceny per lokalizacja | Poza scope dokumentu (właściciel) |
+| Ceny pojazdów per model (`vehicles.json`) | Osobna praca konwersji |
+| qs-housing — ceny per lokalizacja | Osobna praca konwersji |
 
 ---
 
@@ -1753,14 +1742,12 @@ Dokument obejmuje **pełny zakres ekonomii serwera**: zarobki, crime, frakcje, k
 - Koszty życia @ 500$/h: **80–115$/h** (16–22%); żywienie **45$/h** (9%).
 - Endgame aut: większość 300–700k; perełki do 1.2 mln.
 - Cooldown **per gracz per typ napadu** — rotacja crime.
-- MDT — **230** police + **76** EMS + **8** mechanik w pliku wdrożeniowym.
+- MDT — skala docelowa: **230** police + **76** EMS + **8** mechanik.
 - Kasyno, Dark Shop, telefon, P2P auta (podatek 2% DOJ) — w scope v2.
-- Audyt form zarobku — kompletny; eventy sezonowe poza stałą ekonomią.
+- Eventy sezonowe poza stałą ekonomią.
 - Zdrapki — rozrywka, ujemne EV, max wygrana ~8000$.
 - Firmy — **wyższe koszty operacyjne** (składniki 40–65%, DOJ 10%).
 - Czynsz qs-housing — **co 2 tygodnie** (0,6–1,6% wartości).
 - 14 napadów — pełne karty w dokumencie.
 - Endgame auto max 1.2 mln; endgame dom max ~800k.
-- 7 napadów planowanych — implementacja.
-
-[`ekonomia-wdrozenie.md`](ekonomia-wdrozenie.md)
+- 7 napadów planowanych — do implementacji.

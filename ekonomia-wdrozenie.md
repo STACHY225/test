@@ -40,7 +40,7 @@ Pełny kontekst balansu: [`ekonomia-zmiany-v2.md`](ekonomia-zmiany-v2.md) § Dec
 | Temat | Wartość docelowa | Status wdrożenia |
 |---|---|---|
 | Start postaci | bank **2500$** + gotówka **1500$** | Planowany |
-| SQL `job_grades.salary` | `UPDATE job_grades SET salary = 0` | Planowany |
+| SQL `job_grades.salary` | Przelicznik **$/h** wg § Paycheck v2 (MDT + bossmenu) | Planowany |
 | `towVehicle` | **0$** (bez powiązania z MDT) | Gotowe do wdrożenia |
 | `SellVehiclePercent` | **65%** | Planowany |
 | `ManageCoOwnerPrice` | **2000$** | Planowany |
@@ -60,7 +60,29 @@ Pełny kontekst balansu: [`ekonomia-zmiany-v2.md`](ekonomia-zmiany-v2.md) § Dec
 |---|---|---|---|---|
 | `[core]/es_extended/server/paycheck.lua` | Stawki per frakcja, on duty | 125$/15 min cywile; 250$/15 min frakcje; bez on duty | Zasiłek 15$/15 min; LSPD/LSSD/FIB **168–175$/15 min**; EMS **115–125$/15 min**; DOJ **150–158$/15 min**; **mechanic 168–175$/15 min**; tylko on duty | Planowany |
 | `[core]/es_extended/config.lua` | `PaycheckInterval`, `StartingAccountMoney` | 15 min; bank 2500$ | bank **2500$** (bez zmian kwoty) | Planowany |
-| SQL `job_grades.salary` | Grade salaries | różne w DB | **`UPDATE job_grades SET salary = 0`** | Planowany |
+| SQL `job_grades.salary` | Grade salaries | różne w DB | **Przelicznik $/h** — patrz §1b (nie `0`; paycheck tego nie używa) | Planowany |
+
+---
+
+## 1b. SQL `job_grades.salary` — przelicznik referencyjny
+
+**Cel:** MDT (`grade_salary` → profil „Przelicznik $/h”) i bossmenu (`config.grades[].salary` → statystyki pracowników). **Paycheck tego nie czyta** — wypłata wyłącznie z `paycheck.lua`.
+
+**Nie obejmuje** mandatów, kursów, premii — tylko szacunek minutówki za `duty_time`.
+
+| Rodzina | Wzór `salary` ($/h) | Przykład SQL |
+|---|---|---|
+| `unemployed` | **60** | `UPDATE job_grades SET salary = 60 WHERE job_name = 'unemployed';` |
+| Side joby | **550** | `UPDATE job_grades SET salary = 550 WHERE job_name IN ('miner','tailor','lumberjack','slaughterer','hunter','beach_vendor','trashman');` |
+| `c_*` | **45 + grade × 3** | per job: `UPDATE job_grades SET salary = 45 + grade * 3 WHERE job_name LIKE 'c_%';` |
+| `police`, `fib` | **650 + grade × 5** | `UPDATE job_grades SET salary = LEAST(720, 650 + grade * 5) WHERE job_name IN ('police','fib');` |
+| `ambulance` | **450 + grade × 5** | `UPDATE job_grades SET salary = LEAST(720, 450 + grade * 5) WHERE job_name = 'ambulance';` |
+| `doj` | **580 + grade × 5** | `UPDATE job_grades SET salary = LEAST(720, 580 + grade * 5) WHERE job_name = 'doj';` |
+| `mechanic` | **650 + grade × 5** | `UPDATE job_grades SET salary = LEAST(720, 650 + grade * 5) WHERE job_name = 'mechanic';` |
+
+Po UPDATE: restart resource `es_extended` lub serwer (cache jobów ESX). Bossmenu odświeża grades z `ESX.Jobs` przy cache refresh.
+
+**Opcjonalnie (UX):** w bossmenu fallback `22000` w JS zastąpić `0` gdy brak salary — po ustawieniu SQL problem znika.
 
 ---
 
@@ -1075,7 +1097,7 @@ UPDATE houselocations SET price = LEAST(FLOOR(price * 0.08), 800000) WHERE price
 |---|---|---|---|---|
 | `[core]/es_extended/config.lua` | `StartingAccountMoney` | bank 2500$ | **2500$** | Planowany |
 | `[rage]/rage_multicharacter/Config.lua` | `OnStart` → `money` item | 5000$ | **1500$** (łącznie z bankiem **4000$**) | Planowany |
-| SQL `job_grades.salary` | Grade salaries | różne | **`UPDATE job_grades SET salary = 0`** | Planowany |
+| SQL `job_grades.salary` | Grade salaries | różne | **Przelicznik $/h** — patrz §1b | Planowany |
 | `[rage]/rage_bossmenu/BabiczBossMenu_sv.lua` | `sendSalary` | bez capu | tier + max 10k/tydz. | Planowany |
 
 ### Audyt — pozostałe źródła

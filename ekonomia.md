@@ -1,31 +1,6 @@
 # RageCity — docelowa ekonomia serwera (v2)
 
-Dokument **dla zespołu** (design, balans, progresja): **docelowy stan** ekonomii po przeskalowaniu — widełki zarobków, kosztów, progresji i zasad balansu. Opisany logicznie, bez szczegółów plików.
-
-**Wdrożenie techniczne** (co, gdzie, jak zmienić w kodzie): [`ekonomia-wdrozenie.md`](ekonomia-wdrozenie.md).
-
-**Deploy:** wszystkie zmiany wchodzą **jednocześnie** w jednym release — częściowe wdrożenie psuje balans.
-
----
-
-## Decyzje przed deployem (zamknięte)
-
-Wszystkie punkty poniżej są **ustalone** — wdrożenie techniczne: [`ekonomia-wdrozenie.md`](ekonomia-wdrozenie.md).
-
-| Temat | Decyzja |
-|---|---|
-| Start postaci | Bank **2500$** + gotówka **1500$** (łącznie **4000$**) |
-| `job_grades.salary` (SQL) | **0** dla wszystkich grade — paycheck = jedyne źródło wypłaty |
-| `towVehicle` (mechanik → parking PD) | **0$** — narzędzie frakcyjne; zarobek z holowania tylko przez **fakturę MDT** (80$/km, 40% FP) |
-| `SellVehiclePercent` (buyback u dealera) | **65%** (bez zmian) |
-| `ManageCoOwnerPrice` | **2000$** |
-| Pralnia ręczna (trasa vana) | **350–900$**/punkt (zamiast 3000–7500$); strata 20–30% — bez capu i bez CD kursu |
-| Sejf sklepu — wymagania | **`stethoscope`** (durability −15); CD per gracz **15–20 min** (kod: 60 min → `900000` ms) |
-| Local dispatch | Częsty generator scen; uzupełnienie minutówki wg modelu § LSPD (nie druga pensja) |
-| qs-housing config | `CreditEq` **0.06**, `CreditTime` **45 min**, czynsz **1%** co **14 dni** |
-| MDT `data.ts` | Mock dev-only — produkcja czyta `rage_mdt/Config.lua` |
-| `platetape.lua` / lombard animacja | **Bez zmian** (900–1280 ms) |
-| KQ weed — yields / czasy | Patrz § KQ weed — tabela per odmiana (wdrożenie w `config.strains.lua`) |
+Dokument **do review zespołu**: docelowy stan ekonomii po przeskalowaniu — widełki zarobków, kosztów, progresji i zasad balansu.
 
 ---
 
@@ -94,6 +69,22 @@ Przy 6 h/dzień, super auto 500k: **~28 tygodni** (side job), **~19 tygodni** (f
 | Mechanik (`mechanic`) | 168–175$ | 672–700$ | on duty |
 
 Wypłata co 15 min, on duty. Czas AFK odejmowany od czasu służby.
+
+### Przelicznik $/h (stopnie / grade)
+
+W bazie postaci każdy stopień ma pole **salary** — to **nie jest wypłata**, tylko orientacyjny **$/h minutówki** widoczny w MDT i panelu szefa (szacunek za czas służby). **Nie obejmuje** mandatów, kursów ani premii.
+
+| Rodzina joba | Formuła `salary` ($/h) | Przykład |
+|---|---|---|
+| `unemployed` | **60** (stała) | zasiłek |
+| Side joby (`miner`, `tailor`, `lumberjack`, …) | **550** (stała) | minutówka 60 + typowa aktywność ~490 |
+| Firmy `c_*` | **45 + grade × 3** | grade 0 → 45; grade 5 → 60 (tylko minutówka; real $/h z kursów) |
+| `police`, `fib` | **650 + grade × 5** | grade 0 → 650; grade 10 → 700 |
+| `ambulance` | **450 + grade × 5** | grade 0 → 450; grade 5 → 475 |
+| `doj` | **580 + grade × 5** | grade 0 → 580 |
+| `mechanic` | **650 + grade × 5** | jak LSPD — minutówka; reszta z MDT/tuning/kursów |
+
+Cap opcjonalny: frakcje publiczne **max 720$/h**, firmy **max 80$/h** na najwyższym grade.
 
 ---
 
@@ -2279,7 +2270,7 @@ Koncepcja tierów — § Premie tygodniowe. Obecnie premia z bossmenu nie ma cap
 |---|---|---|
 | `StartingAccountMoney` (bank) | 2 500$ | **2 500$** |
 | `rage_multicharacter` `OnStart` — gotówka | 5 000$ (`money` item) | **1 500$** (łącznie z bankiem **4 000$** startu) |
-| `job_grades.salary` (SQL) | ignorowane przez paycheck | **0** dla wszystkich grade; paycheck = jedyne źródło |
+| `job_grades.salary` (SQL) | ignorowane przez paycheck | **Przelicznik $/h** wg tabeli § Paycheck (MDT + bossmenu); nie zerować |
 | LSSD | job `police`, unit `bcso` | **ten sam paycheck** co LSPD (672–700$/h) |
 | Job center UI `salary` | 6 000–26 000$ marketing | zsynchronizować z real $/h v2 |
 | Przelewy P2P (`rage_banking`, `lb-phone`) | odbiorca dostaje pełną kwotę | **redystrybucja**, nie forma zarobku — limity w § Telefon |
@@ -2287,29 +2278,9 @@ Koncepcja tierów — § Premie tygodniowe. Obecnie premia z bossmenu nie ma cap
 
 ---
 
-## Plan testów po deployu
-
-| Test | Metryka | Cel |
-|---|---|---|
-| Side job 6 h | $/h | 500–650$ (z zasiłkiem) |
-| Frakcja spokojna 6 h | $/h | 650–750$ bez mandatów |
-| Firma BS — kurs + sprzedaż | $/h pracownik | 700–1000$ |
-| Crime mix 6 h | $/h po praniu | 700–1200$ |
-| Kasyno 1 h | Δ saldo | ujemne EV |
-| KQ weed 1 cykl | $/h ekwiwalent | ≤ crime typowy |
-| 10 vs 50 online | mandaty/h LSPD | brak runaway society |
-
----
-
-## Kolejność wdrożenia
-
-**Jeden release** — wszystkie moduły razem. Kolejność prac technicznych (dla devów): [`ekonomia-wdrozenie.md`](ekonomia-wdrozenie.md) §0 i §27.
-
----
-
 ## Eventy sezonowe (poza stałą ekonomią)
 
-**Nie uwzględniane** w balansie v2 — wyłączone z planu wdrożenia i testów po deployu.
+**Nie uwzględniane** w balansie v2 — krótkie eventy sezonowe.
 
 | Event / resource | Uwagi |
 |---|---|
@@ -2349,7 +2320,7 @@ Koncepcja tierów — § Premie tygodniowe. Obecnie premia z bossmenu nie ma cap
 | Admin | tylko staff |
 | Więzienie | skrócenie wyroku, bez $ |
 
-**Bank Pacific:** gameplay aktywny — **wypłata lootu do zaimplementowania** przed deployem (karta §12).
+**Bank Pacific:** gameplay opisany w §12 — wypłata lootu ustalona w ekonomii, do dopięcia w grze.
 
 ---
 
@@ -2379,65 +2350,9 @@ Koncepcja tierów — § Premie tygodniowe. Obecnie premia z bossmenu nie ma cap
 | MDT police (230) + EMS (76) + mechanik (8) | Pełne tabele w v2 § Wyroki i mandaty MDT |
 | Zdrapki, automaty, platetape | Opisane |
 | Premie bossmenu — wymagania systemu | Opisane |
-| Plan testów po deployu | Opisane |
 | Śmieciarz | **Poza scope** |
-| Napad truckera (ciężarówka) | 3500–8000$ black, 1–3 os. | Ustalone |
-| Ceny pojazdów per model + housing DB | Osobna praca konwersji |
-
-**Deploy:** jeden release, wszystkie moduły — patrz [`ekonomia-wdrozenie.md`](ekonomia-wdrozenie.md) §0 (blokery) i §27.
-
-## Status decyzji
-
-| Temat | Status |
-|---|---|
-| Zasiłek 60$/h | Ustalone |
-| Kotwica side job 500–600$/h | Ustalone |
-| Model wypłat: minutówka + interakcje + premia tygodniowa | Ustalone |
-| Minutówka: LSPD/FIB 672–700; EMS 460–500; DOJ 600–632 $/h | Ustalone |
-| Spokojna zmiana frakcji > side job (~650–750 vs ~500–600) | Ustalone |
-| Cooldowny napadów — osobny per typ napadu | Ustalone |
-| Endgame aut: bulk 300–700k, perełki do 1.2 mln | Ustalone |
-| Koszty życia: 80–115$/h @ 500; żywienie 45$/h | Ustalone |
-| Skala typowy / aktywna sesja | Ustalone |
-| DOJ: wyższa minutówka + podatki society | Ustalone |
-| Mandaty i usługi — widełki ogólne | Ustalone |
-| Mandaty MDT — pełna tabela (230 wykroczeń) | Ustalone |
-| Wyroki MDT — zasady + pełny taryfikator | Ustalone |
-| LSPD local dispatch + laboratorium | Ustalone |
-| Mechanik — kurs lawetą (zepsute auta lokalne) | Ustalone |
-| Premie tygodniowe (~36 h/tydz., max 10k) | Ustalone |
-| Progresja 14 napadów (pełne karty) | Ustalone |
-| Zadania Moris — Carlos ×4, Moris ×3 | Ustalone |
-| Narkotyki — tabela per item | Ustalone |
-| Lombard — pełna tabela | Ustalone |
-| Narzędzia napadów | Ustalone |
-| Pojazdy — segmenty i limity | Ustalone |
-| Zdrapki — ceny i EV | Ustalone |
-| Firmy — koszty operacyjne (świadomie wyższe) | Ustalone |
-| Kursy firmowe 80–150$/pkg + cooldown 30–45 min | Ustalone |
-| depositProducts 150% → 100–110% | Ustalone |
-| Mechanik — tuning split 35/10/10 | Ustalone |
-| Mechanik — kurs lawetą (zepsute auta lokalne) | Ustalone |
-| Kasyno — MaxWager i chipy po deflacji | Ustalone |
-| Dark Shop + dual Ammunation | Ustalone |
-| Sprzedaż P2P aut — podatek **2% DOJ**, sprzedawca 98% | Ustalone |
-| Beach vendor poza job center | Ustalone |
-| Premie bossmenu — tier + cap 10k | Ustalone |
-| MDT EMS 76 pozycji | Pełna tabela w v2 § EMS — faktury medyczne |
-| Mieszkania — segmenty cenowe | Ustalone |
-| Hipoteka (`CreditEq` **0.06**, co **45 min**) | Ustalone |
-| Czynsz co **14 dni** (**1%** wartości nieruchomości) | Ustalone |
-| KQ weed — yields / czasy per odmiana | Ustalone |
-| Kręgle — opłata 25–50$, brak wypłat | Ustalone |
-| Miękki limit mandatów → society | **Odrzucone** — nie wdrażać |
-| Śmieciarz | **Poza scope** — nie w job center |
-| Napad truckera (ciężarówka) | **3500–8000$** black, CD 35–45 min | Ustalone |
-| NPC farm — cooldown 3 min | **Ustalone** |
-| Mandaty — 1 wystawiający FP na patrol | **Ustalone** (realia RP) |
-| Napady planowane (7 szt.) | Implementacja |
-| Pacific — wypłata lootu | Implementacja przed deployem |
-| Ceny pojazdów per model (`vehicles.json`) | Osobna praca konwersji (w deploy) |
-| qs-housing — ceny per lokalizacja | Osobna praca konwersji DB (w deploy) |
+| Napad truckera (ciężarówka) | Opisane (3500–8000$ black) |
+| Ceny pojazdów per model + housing | Osobna praca konwersji |
 
 ---
 
@@ -2465,4 +2380,4 @@ Dokument obejmuje **pełny zakres ekonomii serwera**: zarobki, crime, frakcje, k
 - 14 napadów — pełne karty w dokumencie.
 - Zadania Moris: Fernando → Carlos (×4) → Moris (×3) — progresja crime, wypłaty ≤ tier napadów.
 - Endgame auto max 1.2 mln; endgame dom max ~800k.
-- 7 napadów planowanych — do implementacji.
+- 7 napadów planowanych — opisane w progresji.

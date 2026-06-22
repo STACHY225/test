@@ -205,7 +205,7 @@ Uwagi:
 ## K. Anti-exploit i regresja
 
 | ID | P | Test | Kroki | Oczekiwany rezultat | FAIL jeśli | Wynik | Uwagi |
-|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|---|
 | K1 | P0 | Pełny deploy | checklista §0 `ekonomia-wdrozenie.md` | **wszystkie 13 blokerów** wdrożone | częściowy deploy | | |
 | K2 | P0 | Duplikat wypłaty heist | reconnect w trakcie wypłaty | **1×** wypłata | 2× | | |
 | K3 | P0 | Society bez craftu | `depositProducts` bez itemów w EQ | **odrzucone** | society rośnie | | |

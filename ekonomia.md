@@ -115,7 +115,7 @@ Cap opcjonalny: frakcje publiczne **max 720$/h**, firmy **max 80$/h** na najwyż
 W praktyce mandaty **nie są tak częste**, jak sugerowałyby same widełki MDT:
 
 - W patrolu zwykle są **dwaj funkcjonariusze**, ale mandat / wyrok wystawia **jeden FP** (wystawiający). Drugi asystuje — **nie dostaje** udziału z grzywny.
-- Udział wystawiającego: **25%** kwoty grzywny → przy średnim mandacie ~100$ to **~25$** na wystawiającego.
+- Udział wystawiającego: **progresywny split** od łącznej grzywny (po zniżkach) — drobne mandaty do **~50%**, duże wyroki **5–12%**, **cap 750$**/wyrok → przy typowym mandacie ~100$ to **~50$** na wystawiającego.
 - Spokojna zmiana to często **0–1 mandat na patrol na godzinę**; więcej dopiero przy dużej aktywności crime i eventach.
 - **Minutówka (~680$/h) to główne źródło dochodu PD** — mandaty i local dispatch to uzupełnienie, nie druga pensja.
 
@@ -124,30 +124,30 @@ W praktyce mandaty **nie są tak częste**, jak sugerowałyby same widełki MDT:
 | Online | Frakcja | Minutówka | Interakcje | Razem $/h |
 |---:|---|---:|---:|---:|
 | ~10 | LSPD, 0 mandatów | 680 | 0 | 680 |
-| ~10 | LSPD, 1 mandat (patrol 2 os.) | 680 | ~25 | ~705 |
+| ~10 | LSPD, 1 mandat (patrol 2 os.) | 680 | ~50 | ~730 |
 | ~10 | EMS, 3 kursy NPC | 480 | 240–375 | 720–855 |
 | ~10 | EMS, 3 kursy + 1 revive | 480 | 320–455 | 800–935 |
 | ~10 | DOJ, 0 spraw | 620 | 0 | 620 |
 | ~10 | DOJ, 1 sprawa | 620 | 50–125 | 670–745 |
-| ~25 | LSPD, 2–3 mandaty (cały serwer) | 680 | ~50–75 | ~730–755 |
+| ~25 | LSPD, 2–3 mandaty (cały serwer) | 680 | ~100–150 | ~780–830 |
 | ~50 | LSPD, aktywna sesja + dispatch | 680 | 100–300 | ~780–980 |
 | ~50 | EMS, aktywna sesja | 480 | 600–1100 | 1080–1580 |
 | ~50 | DOJ, ~4 sprawy | 620 | 200–500 | 820–1120 |
 
 | Scenariusz | Minutówka | Interakcje | Razem $/h |
 |---|---:|---:|---:|
-| LSPD, patrol 2 os., 1 mandat | 680 | ~25 (1× wystawiający) | ~705 |
-| FIB, 1 mandat | 680 | ~25 | ~705 |
+| LSPD, patrol 2 os., 1 mandat | 680 | ~50 (1× wystawiający) | ~730 |
+| FIB, 1 mandat | 680 | ~50 | ~730 |
 | EMS, 6× revive (~80$ udziału) | 480 | ~480 | ~960 |
 | EMS, 3 kursy NPC (~80$ udziału) | 480 | ~240 | ~720 |
-| DOJ, 2 sprawy × ~100$ (25%) | 620 | ~200 | ~820 |
+| DOJ, 2 sprawy × ~100$ | 620 | ~100 | ~720 |
 
 ### LSPD / LSSD / FIB
 
 | Element | Wartość |
 |---|---|
 | Minutówka | 672–700$/h |
-| Mandaty / wyroki MDT | 25% kwoty grzywny |
+| Mandaty / wyroki MDT | Progresywny split (patrz § Wyroki i mandaty MDT) |
 | Lokalne dispatch (NPC) | 550–1150$ / pełna interwencja → kieszeń |
 | Laboratorium — depozyt | wartość dowodów → society police |
 | Konwoje, sprawy | okazjonalnie |
@@ -198,7 +198,7 @@ Skala: ~**30%** ceny rynkowej narkotyku. Test THC: 8 s, bez wypłaty.
 | Element | Wartość |
 |---|---|
 | Minutówka | 460–500$/h |
-| Revive / leczenie | 25% kwoty |
+| Revive / leczenie | Progresywny split (jak mandaty LSPD) |
 | Kurs EMS → lokalny medyk | 200–500$ / kurs, 2–4/h solo |
 
 ### DOJ
@@ -212,26 +212,27 @@ Skala: ~**30%** ceny rynkowej narkotyku. Test THC: 8 s, bez wypłaty.
 
 ### Mandaty (docelowe kwoty)
 
-| Kategoria | Kwota | Udział LSPD/LSSD (25%) |
+| Kategoria | Kwota | Udział wystawiającego (progresywny) |
 |---|---:|---:|
-| Drobne wykroczenie | 30–80$ | 8–20$ |
-| Standardowe wykroczenie | 80–200$ | 20–50$ |
-| Poważne wykroczenie | 200–500$ | 50–125$ |
-| Przestępstwo | 500–1200$ | 125–300$ |
-| Ciężkie przestępstwo | 1200–3000$ | 300–750$ |
+| Drobne wykroczenie | 30–80$ | 15–40$ (~50%) |
+| Standardowe wykroczenie | 80–200$ | 40–75$ (~35–50%) |
+| Poważne wykroczenie | 200–500$ | 105–163$ (~28–35%) |
+| Przestępstwo | 500–1200$ | 163–313$ (~22–26%) |
+| Ciężkie przestępstwo | 1200–3000$ | 313–558$ (~12–19%) |
+| Bardzo duży wyrok | 5000$+ | **max 750$** (cap) |
 
 Szczegółowa tabela — sekcja **Wyroki i mandaty MDT** poniżej.
 
 ### Usługi EMS / DOJ
 
-| Usługa | Cena klienta | Udział pracownika (~25%) |
+| Usługa | Cena klienta | Udział pracownika (progresywny) |
 |---|---:|---:|
-| Revive | 200–500$ | 50–125$ |
-| Leczenie / transport | 150–400$ | 37–100$ |
-| Kurs EMS → lokalny medyk | 200–500$ | 50–125$ |
-| Licencja / dokument DOJ | 150–500$ | 37–125$ |
-| Ugoda / sprawa DOJ | 300–1000$ | 75–250$ |
-| Wyrok / większa sprawa | 800–2500$ | 200–625$ |
+| Revive | 200–500$ | 100–188$ |
+| Leczenie / transport | 150–400$ | 75–163$ |
+| Kurs EMS → lokalny medyk | 200–500$ | 100–188$ |
+| Licencja / dokument DOJ | 150–500$ | 75–188$ |
+| Ugoda / sprawa DOJ | 300–1000$ | 128–313$ |
+| Wyrok / większa sprawa | 800–2500$ | 263–558$ |
 
 ### Premie tygodniowe (bossmenu)
 
@@ -568,7 +569,7 @@ Config.AttackerMultipliers = {
 | Czas akcji | ~10–20 min (szukanie auta + dostawa) |
 | Wymagania | Brak thermite/hack; opcjonalnie lockpick |
 | Mechanika | Otrzymaj wskazane auto w mieście → dostarcz do punktu |
-| Quest | Carlos zad. 2 — ten sam tier wypłat; tutorial przed powtarzalnym heistem |
+| Quest | Carlos zad. 2 (`Moris_Carlos_1`) — ten sam tier wypłat; tutorial przed powtarzalnym heistem |
 
 ---
 
@@ -625,10 +626,10 @@ Config.AttackerMultipliers = {
 | Policja min. | 1 |
 | Cooldown | ~20 min |
 | Czas akcji | ~15–25 min |
-| Wymagania | Opłata startowa ~200–400$ (heist); **brak opłaty** w questach Carlosa |
-| Mechanika | Weź auto z nadajnikiem → ucieczka przed LSPD przez określony czas → punkt zrzutu |
-| Uwagi | Obecny config trackera: 500–5000$, opłata 500$ — rescale; przemyt Carlosa: **900–1600$**, cooldown 90 min |
-| Quest | Carlos zad. 3–4 — wprowadzenie przed powtarzalnym heistem |
+| Wymagania | Wytrych + **hackingdevice** (własne lub zakup u Carlosa w questcie); telefon |
+| Mechanika | Obszar na mapie → auto z nadajnikiem → ucieczka / dezaktywacja hackiem → dostawa |
+| Uwagi | Obecny config trackera (heist): 500–5000$, opłata 500$ — rescale; quest Carlosa: **bez opłaty startowej** |
+| Quest | **Carlos zad. 3** (`Moris_Carlos_3`) — ten sam tier wypłat; tutorial przed heistem |
 
 **Loot na osobę (docelowo):**
 
@@ -1270,7 +1271,7 @@ FIB korzysta z tego samego modelu co LSPD/LSSD:
 | Element | Wartość |
 |---|---|
 | Paycheck | **168–175$/15 min** (672–700$/h), on duty |
-| Udział z mandatów | **25%** kwoty (jak LSPD) |
+| Udział z mandatów | Progresywny split (jak LSPD) |
 | Katalog mandatów | ten sam co LSPD (`policeFines`) |
 | Premie tygodniowe | jak pozostałe frakcje |
 
@@ -1344,12 +1345,12 @@ Po deflacji `vehicles.json`: obniżyć **flaty ×0,15** oraz **shopPricePercent*
 
 ### MDT — usługi mechaniczne (`Config.Fines.mechanic`)
 
-Osobny katalog (myjnia, blacharka, holowanie, palnik…). Split jak mandaty:
+Osobny katalog (myjnia, blacharka, holowanie, palnik…). **Mechanik:** flat % (nie progresywny):
 
-| Job | Udział wystawiającego | Obecnie |
+| Job | Udział wystawiającego | Docelowo |
 |---|---:|---|
-| `mechanic` (LSC) | `finePercentForPlayer` | **25%** |
-| `c_blackrepair`, `c_quiettech` | | **40%** |
+| `mechanic` (LSC) | flat | **40%** |
+| `c_blackrepair`, `c_quiettech` | flat | **40%** |
 
 **Docelowo:** LSC **40%** (jak sub-shopy) · kwoty usług przeskalować (np. myjnia 400$ → **80–120$**, holowanie/km 400$ → **60–100$**, komplet naprawczy 1800$ → **400–700$**).
 
@@ -1478,16 +1479,80 @@ Trzy linie questów u **Moris** (`Tasks/Moris`): **Fernando** (tutorial) → **C
 
 Wymaga ukończenia linii Fernando. Zadania uczą rotacji crime: dostawy → boosting → tracker → przemyt.
 
+**Mapowanie kod ↔ numeracja fabularna** (do czasu reindexu ID):
+
+| Fabuła (#) | ID w kodzie | Plik config | Status |
+|---:|---|---|---|
+| 1 — rozwóz narkotyków | `Moris_Carlos_2` | `TaskConfig[t2]` | `finishReward` 10–15k — do rescale / pełna implementacja 9 stopów |
+| 2 — boosting | `Moris_Carlos_1` | `TaskConfig[t1]` | **aktywny** — szukanie auta w mieście + dostawa |
+| 3 — tracker | `Moris_Carlos_3` | `TaskConfig[t3]` | **aktywny** — patrz karta poniżej |
+| 4 — przemyt | `Moris_Carlos_4` | `TaskConfig[t4]` | planowany |
+
 | # | Zadanie | Flow (skrót) | Czas | Nagroda quest (docelowo) | Cooldown | Powiązanie z napadami |
 |---:|---|---|---|---:|---:|---|
 | 1 | **Rozwóz narkotyków** | 9 lokalizacji na mapie | 30–45 min | **40–80$ dirty / stop** → łącznie **360–720$** black | 45 min | Street sales / KQ weed |
-| 2 | **Boosting** | Znajdź model auta w mieście → punkt A → powrót po nagrodę | 15–25 min | **350–900$** clean (tier auta; niski 350–500$, wysoki 700–900$) | 45 min | Napad #3 Boosting |
-| 3 | **Tracker** | Obszar na mapie → auto z nadajnikiem → ucieczka przed LSPD → punkt A → powrót | 20–30 min | **500–1200$** black | 60 min | Napad #6 Tracker |
+| 2 | **Boosting** | Znajdź model auta w mieście → dostawa do punktu → powrót po nagrodę | 15–25 min | **350–900$** clean (tier auta) | 45 min | Napad #3 Boosting |
+| 3 | **Tracker** | Obszar na mapie → spawn auta z nadajnikiem → wytrych → jazda (LSPD widzi pozycję) → dezaktywacja hackiem → dostawa → powrót do Carlosa | 20–35 min | **500–1200$** black (tier auta) | **60 min** | Napad #6 Tracker |
 | 4 | **Przemyt (+ tracker)** | Zlokalizuj auto → punkt A (paczka) → punkt B (przekazanie) → ucieczka → schowaj w C → Moris | 30–45 min | **900–1600$** black | 90 min | Tracker + crime logistyka |
 
-**Boosting (Carlos) — obecny stan kodu:** wypłaty **3200–13000$** per auto (`shared/2_Carlos.lua`) — wymaga rescale do tierów powyżej. Kara za uszkodzenie auta: **−20%** nagrody (już w logice serwera).
+#### Carlos zad. 3 — Tracker (`Moris_Carlos_3`)
 
-**Tracker / przemyt:** integracja z `[rage]/BabiczTracker` lub logika questowa — wypłaty jak napady #6, bez opłaty startowej 500$ z obecnego trackera.
+Tutorial przed powtarzalnym heistem **#6 Tracker**. Wypłata: **`black_money`** (wymaga prania). Wymaga ukończenia **zad. 2** u Carlosa.
+
+**Flow (etapy):**
+
+1. Start u Carlosa — jeśli ktoś już robi trackera, gracz wchodzi w **kolejkę globalną** (1 aktywna instancja na serwer).
+2. SMS + obszar na mapie (promień **200–400 m**) — w środku resp **jedno** auto z listy `vehicles`.
+3. Auto zablokowane — potrzebny **wytrych** (własny lub zakup u Carlosa w trakcie questu).
+4. Po wejściu w auto: **nadajnik aktywny** — LSPD na służbie dostaje dispatch + pozycję co **3 s** (`trackerBroadcast`).
+5. **Dezaktywacja nadajnika** — minigra hack (`hackingdeviceUse` **15–20 s**); wymaga **hackingdevice** (własne lub zakup u Carlosa).
+6. Po dezaktywacji: punkt dostawy → schowanie auta → powrót do Carlosa po wypłatę.
+7. **Grace 30 s** po wyjściu z auta; pojazdy emergency class **18** w promieniu **100 m** = fail.
+
+**Parametry config (`shared/2_Carlos.lua` → `TaskConfig[t3]`):**
+
+| Parametr | Obecnie (kod) | Docelowo v2 |
+|---|---|---|
+| `cooldown` | 45 min | **60 min** |
+| `copsNeeded` | 0 | **≥ 1** PD on duty |
+| `lockpickPrice` | 1320$ | **200–300$** (zakup w questcie, clean) |
+| `hackingdevicePrice` | 4400$ | **450–650$** (jak Dark Shop **400–800$**) |
+| `hackingdeviceUse` | 15–20 s | bez zmian |
+| `deactivateTime` | **20 s** (test) | **180–240 s** czasu na dezaktywację po wsiadaniu |
+| `deactivateRoundTime` | 30 s | bez zmian |
+| `trackerBroadcast` | 3 s | bez zmian |
+| `nitroChance` | 1/3 | bez zmian (flavor) |
+| Kara uszkodzenia | — | **−20%** nagrody (jak boosting t1) |
+
+**Nagrody per auto — obecnie vs docelowo:**
+
+| Auto | Obecnie (black) | Docelowo (black) | Tier |
+|---|---:|---:|---|
+| Futo | 7500–9500$ | **480–620$** | niski |
+| Sultan | 8000–10000$ | **500–650$** | niski |
+| Vigero | 8200–10200$ | **520–665$** | niski |
+| Phoenix | 8500–10500$ | **550–680$** | średni |
+| Gauntlet | 9000–11000$ | **580–710$** | średni |
+| Dominator | 9500–11500$ | **610–740$** | średni |
+| Feltzer | 10000–12000$ | **640–770$** | średni |
+| Banshee | 10500–12500$ | **670–800$** | średni |
+| Baller | 11000–13000$ | **700–830$** | wysoki |
+| Dubsta | 12000–14000$ | **760–900$** | wysoki |
+| Bullet | 14000–16500$ | **880–1200$** | wysoki |
+
+**Ekonomia netto (przykład):**
+
+| Scenariusz | Koszt wejścia | Łup brutto | Po praniu (~25%) | $/h efektywne* |
+|---|---:|---:|---:|---:|
+| Własny lockpick + hack | 0$ | ~700$ | ~525$ | ~700–950$/h |
+| Zakup narzędzi u Carlosa | ~550–950$ | ~700$ | ~525$ | pierwszy run ~0–200$ netto |
+| Bullet + zakup narzędzi | ~950$ | ~1050$ | ~790$ | ~600–800$/h |
+
+\*Przy CD **60 min** + ~25 min akcji. Kolejne runy bez odkupu narzędzi zbliżają się do **700–1100$/h** — w widełkach crime, poniżej boosting solo farm.
+
+**Boosting (`Moris_Carlos_1`, fabuła zad. 2) — obecny stan kodu:** wypłaty **3200–13000$** clean per auto (`TaskConfig[t1].vehicles`) — rescale do **350–900$** (jak napad #3). Kara za uszkodzenie auta: **−20%** nagrody (logika serwera).
+
+**Przemyt (`Moris_Carlos_4`):** planowany — wypłaty jak w tabeli zad. 4; bez opłaty startowej 500$ z obecnego `[rage]/BabiczTracker`.
 
 ### Moris — haracz i fabuła
 
@@ -1528,12 +1593,27 @@ Katalog w `rage_mdt/Config.lua` — **230 pozycji** wspólnych dla police, fib, 
 | Składanie wyroku | Pozycje z koszyka **sumują** grzywnę i `jail`; można dodać wiele przestępstw |
 | Zniżka (DOJ/LSPD) | **0–30%** na grzywnę (UI MDT) |
 | Ubezpieczenie EMS | **−50%** grzywny (`health_insurance`) |
-| Split grzywny | **25%** na bank wystawiającego, reszta → society frakcji |
+| Split grzywny | **Progresywny** od łącznej kwoty (po zniżkach DOJ / ubezpieczeniu EMS) — reszta → society frakcji |
+| Progi udziału FP | do **150$** → **50%** · **151–400$** → **35%** · **401–1500$** → **25%** · **1501–5000$** → **12%** · **5001$+** → **5%** |
+| Cap na wyrok | **max 750$** do kieszeni wystawiającego (zabezpieczenie przed stackiem pozycji) |
 | Wykroczenia drogowe | Tylko grzywna (bez więzienia), wyjątki: DUI, ucieczka, brawura |
 | Kategoria Napady | **1 wpis = 1 typ napadu** — nie łączyć z ogólnym rozbojem; zgodność z progresją 14 napadów |
 | Okoliczności łagodzące | Osobna kategoria — ulgi **odejmują** z sumy (patrz tabela) |
 
-### Skala grzywien (docelowa — wdrożenie w `Config.lua`)
+### Przykłady splitu (łączna grzywna po zniżkach)
+
+| Grzywna | Udział FP | Efektywny % |
+|---:|---:|---:|
+| 80$ | 40$ | 50% |
+| 300$ | 128$ | 43% |
+| 800$ | 263$ | 33% |
+| 2500$ | 558$ | 22% |
+| 8000$ | **750$** (cap) | 9% |
+| 15000$ | **750$** (cap) | 5% |
+
+**Zasada:** minutówka pozostaje głównym dochodem; mandaty uzupełniają (+**120–300$/h** typowo), duży wyrok nie daje drugiej pensji.
+
+### Skala grzywien (docelowa)
 
 | Tier | Grzywna | Przykłady |
 |---|---:|---|
@@ -1856,7 +1936,7 @@ Obecne ulgi mandatowe sięgają **−25000$** (skala sprzed deflacji). Docelowo 
 
 ### EMS — faktury medyczne (76 pozycji)
 
-Plik: `[rage]/rage_mdt/Config.lua` → `Config.Fines.ambulance`. **Split wystawiającego: 25%** (bez zmian struktury).
+Plik: `[rage]/rage_mdt/Config.lua` → `Config.Fines.ambulance`. **Split wystawiającego:** progresywny (jak mandaty LSPD).
 
 #### Złamania
 

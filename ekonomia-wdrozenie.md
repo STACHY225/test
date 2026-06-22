@@ -2,7 +2,7 @@
 
 Checklista techniczna: **co, gdzie i na co zmienić** — pełne tabele cen, czasów i limitów.  
 Model balansu (dlaczego, widełki): [`ekonomia-zmiany-v2.md`](ekonomia-zmiany-v2.md).  
-**QA po deployu:** [`ekonomia-qa-testy.md`](ekonomia-qa-testy.md) — 84 testy, widełki PASS/FAIL.  
+**QA po deployu:** [`ekonomia-qa-testy.md`](ekonomia-qa-testy.md) (testerzy) · [`ekonomia-qa-testy-dev.md`](ekonomia-qa-testy-dev.md) (lead)  
 **Pełny rejestr (§A):** każda pozycja z configów — auto-generowany (`python docs/_gen_wdrozenie_full.py` → `_wdrozenie_full_registry.md`, scalany do tego pliku).  
 **Katalogi ręczne:** §3A (rage_jobs), §11A (firmy), §15 (lombard), §16 (narkotyki), §19A (rage_market), §21B (pojazdy `types`).  
 **MDT mandaty/wyroki (314 poz.):** pełne tabele **fine + jail** w **§7** (generator: `python docs/_gen_mdt_fines_table.py`).
@@ -30,7 +30,7 @@ Model balansu (dlaczego, widełki): [`ekonomia-zmiany-v2.md`](ekonomia-zmiany-v2
 | 26–31 | Kasyno, dispatch, MDT ulgi |
 | **A** | **Pełny rejestr zmian (każda pozycja)** |
 | 32 | Indeks paczki |
-| — | [**QA testy**](ekonomia-qa-testy.md) (osobny plik) |
+| — | [**QA testy**](ekonomia-qa-testy.md) (testerzy) · [dev](ekonomia-qa-testy-dev.md) |
 
 **Legenda kolumn:** Obecnie = stan w repo · Docelowo = v2 · Plik = ścieżka względem repo.
 
@@ -1079,11 +1079,32 @@ Formuła: `avg(Config.Drugs[source].price) × requiredCount × 0.9` (±5%). Przy
 
 ### `rage_drugs/Config.lua` — zbiory i craft
 
-**Status: Gotowe** — yields i czasy harvest/craft **bez zmian** na deploy (v2).
+**Status: Planowany** — obecne mnożniki i krótkie `spawnDelay` pozwalają farmić **2–4×** szybciej niż norma v2; wdrożyć tabelę z `ekonomia-zmiany-v2.md` § Produkcja narkotyków.
 
+| Strefa | Parametr | Obecnie | Docelowo |
+|---|---|---|---|
+| Weed harvest | duration | 8500 | 10000–11000 |
+| Weed harvest | spawnDelay | 25–30 | 35–40 |
+| Weed harvest | multiplier | 1–2 / 1–3 | 1–2 |
+| Weed process | multiplier | 1–4 | 1–2 |
+| Weed process | duration | 8500 | 10000 |
+| Koka harvest | duration / spawnDelay | 11500 / 30 | 12000–13000 / 40–45 |
+| Koka process | multiplier | 1–3 | 1–2 |
+| Grzyby harvest | spawnDelay | 15 | 25–30 |
+
+**Norma QA:** weed pole **700–1000 $/h** · koka **850–1200 $/h** (pełny łańcuch + ulica).
+
+### `rage_meth/` — lab mobilny
+
+| Plik | Co zmienić | Obecnie | Docelowo | Status |
+|---|---|---|---|---|
+| `Config.lua` → `NeededItems.acetone` | koszt wejścia | 5 | **6–8** | Planowany |
+| `BabiczMeth_sv.lua` | yield / cook | random(5,15) | **random(3,8)** | Planowany |
+| `Config.lua` | accetonTime, wearMask, nauseaTime | 20000 | **25000–30000** | Planowany |
+
+**Norma QA:** pełny cykl **≥25 min** · **900–1400 $/h** po sprzedaży (E12).
 
 ---
-
 
 ## 17. Pralnia
 
